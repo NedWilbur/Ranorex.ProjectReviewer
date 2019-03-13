@@ -20,7 +20,7 @@ namespace Ranorex.ProjectReviewer
             if (solutionFilePath == "1")
                 solutionFilePath = @"C:\Users\Ned\Documents\Ranorex\RanorexStudio Projects\SampleSolution\SampleProject";
             if (solutionFilePath == "2")
-                solutionFilePath = @"ADD YOUR SOLUTION PATH HERE SEAN";
+                solutionFilePath = @"C:\Users\Sean Perrotta\Documents\Ranorex\RanorexStudio Projects\Expedia\Expedia";
 
             InspectTestSuites();
 
