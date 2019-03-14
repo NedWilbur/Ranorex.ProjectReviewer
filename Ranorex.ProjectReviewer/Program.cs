@@ -18,9 +18,9 @@ namespace Ranorex.ProjectReviewer
             Console.Write("Compress Solution File Path: ");
             solutionFilePath = Console.ReadLine();
             if (solutionFilePath == "1")
-                solutionFilePath = @"C:\Users\Ned\Documents\Ranorex\RanorexStudio Projects\SampleSolution\SampleProject";
+                solutionFilePath = @"C:\Users\Ned\Documents\Ranorex\RanorexStudio Projects\SampleSolution\";
             if (solutionFilePath == "2")
-                solutionFilePath = @"C:\Users\Sean Perrotta\Documents\Ranorex\RanorexStudio Projects\Expedia\Expedia";
+                solutionFilePath = @"C:\Users\Sean Perrotta\Documents\Ranorex\RanorexStudio Projects\Expedia\";
 
             InspectTestSuites();
 
@@ -29,7 +29,7 @@ namespace Ranorex.ProjectReviewer
             Console.ReadKey();
         }
 
-        static string[] FindFiles(string extension) => Directory.GetFiles(solutionFilePath, $"*.{extension}");
+        static string[] FindFiles(string extension) => Directory.GetFiles(solutionFilePath, $"*.{extension}", SearchOption.AllDirectories);
 
         static void Write(string message, string filename = null)
         {
