@@ -29,7 +29,10 @@ namespace Ranorex.ProjectReviewer
             Console.ReadKey();
         }
 
-        static string[] FindFiles(string extension) => Directory.GetFiles(solutionFilePath, $"*.{extension}", SearchOption.AllDirectories);
+        static string[] FindFiles(string extension) => 
+            Directory.GetFiles(solutionFilePath, $"*.{extension}", SearchOption.AllDirectories)
+            .Where(file => !file.Contains("bin"))
+            .ToArray();
 
         static void Write(string message, string filename = null)
         {
