@@ -11,10 +11,11 @@ namespace Ranorex.ProjectReviewer
     class Program
     {
         static string solutionFilePath;
-        static string cat;
+        static string writeCatagory;
 
         static void Main(string[] args)
         {
+            //Get Solution File Path
             Console.Write("Compress Solution File Path: ");
             solutionFilePath = Console.ReadLine();
             if (solutionFilePath == "1")
@@ -22,6 +23,7 @@ namespace Ranorex.ProjectReviewer
             if (solutionFilePath == "2")
                 solutionFilePath = @"C:\Users\Sean Perrotta\Documents\Ranorex\RanorexStudio Projects\Expedia\";
 
+            //Inspect Files
             InspectTestSuites();
 
             //Finished
@@ -29,40 +31,55 @@ namespace Ranorex.ProjectReviewer
             Console.ReadKey();
         }
 
+        /// <summary>
+        /// Finds files with a specific extension. Ignores /bin folder.
+        /// </summary>
+        /// <param name="extension"></param>
+        /// <returns>String array of files found</returns>
         static string[] FindFiles(string extension) => 
             Directory.GetFiles(solutionFilePath, $"*.{extension}", SearchOption.AllDirectories)
             .Where(file => !file.Contains("bin"))
             .ToArray();
 
+        /// <summary>
+        /// Outputs data to console (and eventually CSV file)
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="filename"></param>
         static void Write(string message, string filename = null)
         {
-            Console.WriteLine($"{cat}\t{message}\t{filename}");
+            Console.WriteLine($"{writeCatagory}\t{message}\t{filename}");
+            //TODO: Write to CSV file
         }
+
 
         static void InspectTestSuites()
         {
-            cat = "Test Suite";
-            Write("Starting inspection of test suite");
+            //Set catagory for output file
+            writeCatagory = "Test Suite";
+            Console.WriteLine("Starting inspection of test suite");
 
+            //Get all TS files
             string[] testSuites = FindFiles("rxtst");
             if (testSuites.Length <= 0)
             {
                 Write("No test suites found!");
                 return;
             }
+            Console.WriteLine($"Test Suites Found: {testSuites.Length.ToString()}");
 
-            Write($"Test Suites Found: {testSuites.Length.ToString()}");
-
+            //Loop all TS files
             int totalTC = 0;
-
             foreach (string testSuiteFile in testSuites)
             {
+                //Create XML Reader for TS file
                 XDocument testSuite = XDocument.Load(testSuiteFile);
 
                 //Check for Setup/Teardowns
                 SetupCount(testSuite);
                 TeardownCount(testSuite);
 
+                //Loop all TC in TS
                 IEnumerable<XElement> tcFlatList = testSuite.Descendants("flatlistofchildren").Descendants("testcase");
                 totalTC += tcFlatList.Count<XElement>();
                 foreach (XElement tc in tcFlatList)
@@ -74,6 +91,11 @@ namespace Ranorex.ProjectReviewer
             }
         }
 
+        /// <summary>
+        /// Checks if a TC has a description
+        /// </summary>
+        /// <param name="testCase"></param>
+        /// <returns>True if found, else false</returns>
         static bool TCContainsDescription(XElement testCase)
         {
             if (testCase.HasElements)
@@ -87,18 +109,27 @@ namespace Ranorex.ProjectReviewer
             return false;
         }
 
+        /// <summary>
+        /// Writes how many setup regions exists in a TS
+        /// </summary>
+        /// <param name="testSuite"></param>
         static void SetupCount(XDocument testSuite)
         {
             int count = testSuite.Descendants("flatlistofchildren").Descendants("setup").Count();
             Write("Total [SETUP] regions found: " + count);
         }
 
+        /// <summary>
+        /// Writes how many teardown regions exists in a TS
+        /// </summary>
+        /// <param name="testSuite"></param>
         static void TeardownCount(XDocument testSuite)
         {
             int count = testSuite.Descendants("flatlistofchildren").Descendants("teardown").Count();
             Write("Total [TEARDOWN] regions found: " + count);
         }
 
+        //  TS
         //Disabled Modules
         //Empty tc
         //Unused modules
