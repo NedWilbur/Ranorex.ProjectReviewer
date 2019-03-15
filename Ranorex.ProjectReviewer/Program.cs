@@ -78,18 +78,31 @@ namespace Ranorex.ProjectReviewer
                 //Check for Setup/Teardowns
                 SetupCount(testSuite);
                 TeardownCount(testSuite);
-                DisabledModuleCount(testSuite);
-
-
 
                 //Loop all TC in TS
-                IEnumerable<XElement> tcFlatList = testSuite.Descendants("flatlistofchildren").Descendants("testcase");
-                totalTC += tcFlatList.Count<XElement>();
-                foreach (XElement tc in tcFlatList)
+                IEnumerable<XElement> AllFlatTestCases = testSuite.Descendants("flatlistofchildren").Descendants("testcase");
+                totalTC += AllFlatTestCases.Count<XElement>();
+                foreach (XElement tc in AllFlatTestCases)
                 {
                     //Check for TC descriptions
                     if (!TCContainsDescription(tc))
                         Write($"'{tc.Name.ToString()}' missing description");
+
+                    //Check for empty test containers
+                    //TODO:SEAN
+                }
+
+                //Loop all Modules
+                IEnumerable<XElement> allFlatModules = testSuite.Descendants("flatlistofchildren").Descendants("testmodule");
+                foreach (XElement module in allFlatModules)
+                {
+                    //Check for disabled modules
+                    XAttribute enabledAttribute = module.Attribute("enabled");
+                    if (enabledAttribute == null)
+                        continue;
+
+                    if (enabledAttribute.Value == "False")
+                        Write($"{module.Attribute("name").Value} disabled!");
                 }
             }
         }
@@ -131,19 +144,8 @@ namespace Ranorex.ProjectReviewer
             int count = testSuite.Descendants("flatlistofchildren").Descendants("teardown").Count();
             Write("Total [TEARDOWN] regions found: " + count);
         }
-        
-        //static void DisabledModuleCount(XDocument testSuite)
-        {
-
-        //    int count = testSuite.Descendants("flatlistofchildren").("enabled="False").Count();
-          //  Write("Total Test Modules Found: " + count);
-            
-        
-
-        }
 
         //  TS
-        //Disabled Modules
         //Empty tc
         //Unused modules
 
