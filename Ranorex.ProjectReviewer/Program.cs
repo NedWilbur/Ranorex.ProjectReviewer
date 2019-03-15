@@ -78,6 +78,9 @@ namespace Ranorex.ProjectReviewer
                 //Check for Setup/Teardowns
                 SetupCount(testSuite);
                 TeardownCount(testSuite);
+                DisabledModuleCount(testSuite);
+
+
 
                 //Loop all TC in TS
                 IEnumerable<XElement> tcFlatList = testSuite.Descendants("flatlistofchildren").Descendants("testcase");
@@ -127,6 +130,16 @@ namespace Ranorex.ProjectReviewer
         {
             int count = testSuite.Descendants("flatlistofchildren").Descendants("teardown").Count();
             Write("Total [TEARDOWN] regions found: " + count);
+        }
+        
+        //static void DisabledModuleCount(XDocument testSuite)
+        {
+
+        //    int count = testSuite.Descendants("flatlistofchildren").("enabled="False").Count();
+          //  Write("Total Test Modules Found: " + count);
+            
+        
+
         }
 
         //  TS
