@@ -98,9 +98,8 @@ namespace Ranorex.ProjectReviewer
                     XAttribute enabledId = testmodule.Attribute("id");
                     
                         Write("we got a problem");
-
-                
                 }
+
                     //Loop all Modules
                     IEnumerable<XElement> allFlatModules = testSuite.Descendants("flatlistofchildren").Descendants("testmodule");
                 foreach (XElement module in allFlatModules)
