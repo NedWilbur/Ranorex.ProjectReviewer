@@ -21,7 +21,7 @@ namespace Ranorex.ProjectReviewer
             if (solutionFilePath == "1")
                 solutionFilePath = @"C:\Users\Ned\Documents\Ranorex\RanorexStudio Projects\SampleSolution\";
             if (solutionFilePath == "2")
-                solutionFilePath = @"C:\Users\Sean Perrotta\Documents\Ranorex\RanorexStudio Projects\Expedia\";
+                solutionFilePath = @"C:\Users\Sean Perrotta\Documents\Ranorex\RanorexStudio Projects\TestSolutionForProject\TestSolutionForProject";
 
             //Inspect Files
             InspectTestSuites();
@@ -87,13 +87,22 @@ namespace Ranorex.ProjectReviewer
                     //Check for TC descriptions
                     if (!TCContainsDescription(tc))
                         Write($"'{tc.Name.ToString()}' missing description");
-
-                    //Check for empty test containers
-                    //TODO:SEAN
                 }
 
-                //Loop all Modules
-                IEnumerable<XElement> allFlatModules = testSuite.Descendants("flatlistofchildren").Descendants("testmodule");
+                //Check for empty test containers
+                //TODO:SEAN
+
+                IEnumerable<XElement> allChildTestCases = testSuite.Descendants("childhierarchy").Descendants("testcase");
+                foreach(XElement testmodule in allChildTestCases)
+                {
+                    XAttribute enabledId = testmodule.Attribute("id");
+                    
+                        Write("we got a problem");
+
+                
+                }
+                    //Loop all Modules
+                    IEnumerable<XElement> allFlatModules = testSuite.Descendants("flatlistofchildren").Descendants("testmodule");
                 foreach (XElement module in allFlatModules)
                 {
                     //Check for disabled modules
