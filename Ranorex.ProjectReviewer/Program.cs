@@ -190,6 +190,16 @@ namespace Ranorex.ProjectReviewer
                 int repeatCount = int.Parse(recordTable.Element("repeatcount").Value);
                 if (repeatCount != 1)
                     Write($"Repeat count = ({repeatCount}) (generally = 1)", moduleName);
+
+                //Check if turbomode = True
+
+                //Check Speed Factor not equal to 1
+
+                //Check for default values on variables
+
+                //Check for unused variables
+
+
             }
         }
 
