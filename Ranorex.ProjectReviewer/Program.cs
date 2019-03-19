@@ -25,6 +25,9 @@ namespace Ranorex.ProjectReviewer
 
             //Inspect Files
             InspectTestSuites();
+            InspectRecordingModulesXML();
+            InspectRecordingModulesCS();
+            InspectRecordingModulesUsercodeCS();
 
             //Finished
             Console.WriteLine("Finished, press any key to exit.");
@@ -36,10 +39,22 @@ namespace Ranorex.ProjectReviewer
         /// </summary>
         /// <param name="extension"></param>
         /// <returns>String array of files found</returns>
-        static string[] FindFiles(string extension) => 
-            Directory.GetFiles(solutionFilePath, $"*.{extension}", SearchOption.AllDirectories)
-            .Where(file => !file.Contains("bin"))
-            .ToArray();
+        static string[] FindFiles(string extension)
+        {
+            string[] foundFiles = Directory.GetFiles(solutionFilePath, $"*.{extension}", SearchOption.AllDirectories)
+                .Where(file => !file.Contains("bin"))
+                .ToArray();
+
+            if (foundFiles.Length <= 0)
+            {
+                Write($"No {extension} files found!");
+                return null;
+            }
+            Console.WriteLine($"{foundFiles.Length.ToString()} {extension} files found!");
+
+            return foundFiles;
+        }
+            
 
         /// <summary>
         /// Outputs data to console (and eventually CSV file)
@@ -61,12 +76,10 @@ namespace Ranorex.ProjectReviewer
 
             //Get all TS files
             string[] testSuites = FindFiles("rxtst");
-            if (testSuites.Length <= 0)
-            {
-                Write("No test suites found!");
+
+            //Check if any TS files
+            if (testSuites == null)
                 return;
-            }
-            Console.WriteLine($"Test Suites Found: {testSuites.Length.ToString()}");
 
             //Loop all TS files
             int totalTC = 0;
@@ -157,6 +170,43 @@ namespace Ranorex.ProjectReviewer
         //  TS
         //Empty tc
         //Unused modules
+
+        static void InspectRecordingModulesXML()
+        {
+            //Set catagory for output file
+            writeCatagory = "Module";
+            Console.WriteLine("Starting inspection of recirding module's XML");
+
+            //Get all recording modules files
+            string[] recordingModules = FindFiles("rxrep");
+
+            //Check if no modules found
+            if (recordingModules == null)
+                return;
+
+            //Loop all modules
+            foreach (string recordingModuleFilePath in recordingModules)
+            {
+                //Create XDocument/XElement
+                XDocument recordingModuleXML = XDocument.Load(recordingModuleFilePath);
+                //TODO NED: Fix XML reading
+
+                //Check Repeat Count
+                int repeatCount = int.Parse(recordingModuleXML.Element("repeatcount").Value);
+                if (repeatCount != 1)
+                    Write($"Repeat count = ({repeatCount}) (generally = 1)");
+            }
+        }
+
+        static void InspectRecordingModulesCS()
+        {
+
+        }
+
+        static void InspectRecordingModulesUsercodeCS()
+        {
+
+        }
 
         //  MODUELS
         //Long action count
