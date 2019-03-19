@@ -24,29 +24,29 @@ namespace ProjectReviewTester
 {
 #pragma warning disable 0436 //(CS0436) The type 'type' in 'assembly' conflicts with the imported type 'type2' in 'assembly'. Using the type defined in 'assembly'.
     /// <summary>
-    ///The Recording1 recording.
+    ///The RepeatCount3 recording.
     /// </summary>
-    [TestModule("d45f36d5-4442-4793-9296-36bd903a5088", ModuleType.Recording, 1)]
-    public partial class Recording1 : ITestModule
+    [TestModule("8a3a6c79-fec6-4523-9919-8e4e47b86878", ModuleType.Recording, 3)]
+    public partial class RepeatCount3 : ITestModule
     {
         /// <summary>
         /// Holds an instance of the ProjectReviewTesterRepository repository.
         /// </summary>
         public static ProjectReviewTesterRepository repo = ProjectReviewTesterRepository.Instance;
 
-        static Recording1 instance = new Recording1();
+        static RepeatCount3 instance = new RepeatCount3();
 
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
-        public Recording1()
+        public RepeatCount3()
         {
         }
 
         /// <summary>
         /// Gets a static instance of this recording.
         /// </summary>
-        public static Recording1 Instance
+        public static RepeatCount3 Instance
         {
             get { return instance; }
         }
@@ -79,10 +79,6 @@ namespace ProjectReviewTester
 
             Init();
 
-            Report.Log(ReportLevel.Info, "Invoke action", "Invoking EnsureVisible() on item 'Explorer.Start'.", repo.Explorer.StartInfo, new RecordItemIndex(0));
-            repo.Explorer.Start.EnsureVisible();
-            Delay.Milliseconds(0);
-            
         }
 
 #region Image Feature Data

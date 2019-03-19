@@ -58,13 +58,12 @@ namespace Ranorex.ProjectReviewer
         /// Outputs data to console (and eventually CSV file)
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="filename"></param>
-        static void Write(string message, string filename = null)
+        /// <param name="itemName"></param>
+        static void Write(string message, string itemName = null)
         {
-            Console.WriteLine($"{writeCatagory}\t{message}\t{filename}");
+            Console.WriteLine($"{writeCatagory}\t{message}\t{itemName}");
             //TODO: Write to CSV file
         }
-
 
         static void InspectTestSuites()
         {
@@ -172,7 +171,7 @@ namespace Ranorex.ProjectReviewer
             Console.WriteLine("Starting inspection of recirding module's XML");
 
             //Get all recording modules files
-            string[] recordingModules = FindFiles("rxrep");
+            string[] recordingModules = FindFiles("rxrec");
 
             //Check if no modules found
             if (recordingModules == null)
@@ -182,13 +181,15 @@ namespace Ranorex.ProjectReviewer
             foreach (string recordingModuleFilePath in recordingModules)
             {
                 //Create XDocument/XElement
-                XDocument recordingModuleXML = XDocument.Load(recordingModuleFilePath);
-                //TODO NED: Fix XML reading
+                XElement recordTable = XDocument.Load(recordingModuleFilePath).Element("recordtable");
+
+                //Get module name
+                string moduleName = recordTable.Element("codegen").Attribute("classname").Value;
 
                 //Check Repeat Count
-                //int repeatCount = int.Parse(recordingModuleXML.Element("repeatcount").Value);
-                //if (repeatCount != 1)
-                //    Write($"Repeat count = ({repeatCount}) (generally = 1)");
+                int repeatCount = int.Parse(recordTable.Element("repeatcount").Value);
+                if (repeatCount != 1)
+                    Write($"Repeat count = ({repeatCount}) (generally = 1)", moduleName);
             }
         }
 

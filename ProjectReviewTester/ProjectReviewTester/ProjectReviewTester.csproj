@@ -141,6 +141,18 @@
       <UserCode>true</UserCode>
       <id>eecfbd02-6be1-48f1-8563-20b43873607e</id>
     </Compile>
+    <Compile Include="RepeatCount3.cs">
+      <BoundTo>946c8cab-385f-473c-af48-2e565c13b1aa</BoundTo>
+      <DependentUpon>RepeatCount3.rxrec</DependentUpon>
+      <RecorderCode>true</RecorderCode>
+      <id>77742a90-936b-40f8-8580-8b297c651fa9</id>
+    </Compile>
+    <Compile Include="RepeatCount3.UserCode.cs">
+      <BoundTo>946c8cab-385f-473c-af48-2e565c13b1aa</BoundTo>
+      <DependentUpon>RepeatCount3.rxrec</DependentUpon>
+      <UserCode>true</UserCode>
+      <id>9bd1f6d2-0ffd-494e-97e5-e0c70103293d</id>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="TestSuite2.rxtst">
@@ -169,6 +181,11 @@
       <BoundTo>6ae73c4b-058b-4530-8fd7-58a3f9ceb3d6</BoundTo>
       <id>bda711d3-6092-41be-a7ad-9c375ef6b919</id>
       <recordtableid>d45f36d5-4442-4793-9296-36bd903a5088</recordtableid>
+    </None>
+    <None Include="RepeatCount3.rxrec">
+      <BoundTo>6ae73c4b-058b-4530-8fd7-58a3f9ceb3d6</BoundTo>
+      <id>946c8cab-385f-473c-af48-2e565c13b1aa</id>
+      <recordtableid>8a3a6c79-fec6-4523-9919-8e4e47b86878</recordtableid>
     </None>
   </ItemGroup>
   <ItemGroup>

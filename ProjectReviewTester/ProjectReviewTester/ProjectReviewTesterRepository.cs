@@ -27,6 +27,7 @@ namespace ProjectReviewTester
     public partial class ProjectReviewTesterRepository : RepoGenBaseFolder
     {
         static ProjectReviewTesterRepository instance = new ProjectReviewTesterRepository();
+        ProjectReviewTesterRepositoryFolders.ExplorerAppFolder _explorer;
 
         /// <summary>
         /// Gets the singleton class instance representing the ProjectReviewTesterRepository element repository.
@@ -43,6 +44,7 @@ namespace ProjectReviewTester
         public ProjectReviewTesterRepository() 
             : base("ProjectReviewTesterRepository", "/", null, 0, false, "d1f376e7-b334-4b42-b75b-58eca915fdc9", ".\\RepositoryImages\\ProjectReviewTesterRepositoryd1f376e7.rximgres")
         {
+            _explorer = new ProjectReviewTesterRepositoryFolders.ExplorerAppFolder(this);
         }
 
 #region Variables
@@ -60,6 +62,15 @@ namespace ProjectReviewTester
                 return _selfInfo;
             }
         }
+
+        /// <summary>
+        /// The Explorer folder.
+        /// </summary>
+        [RepositoryFolder("1910e180-f162-486e-9436-358600c065d7")]
+        public virtual ProjectReviewTesterRepositoryFolders.ExplorerAppFolder Explorer
+        {
+            get { return _explorer; }
+        }
     }
 
     /// <summary>
@@ -68,6 +79,72 @@ namespace ProjectReviewTester
     [System.CodeDom.Compiler.GeneratedCode("Ranorex", global::Ranorex.Core.Constants.CodeGenVersion)]
     public partial class ProjectReviewTesterRepositoryFolders
     {
+        /// <summary>
+        /// The ExplorerAppFolder folder.
+        /// </summary>
+        [RepositoryFolder("1910e180-f162-486e-9436-358600c065d7")]
+        public partial class ExplorerAppFolder : RepoGenBaseFolder
+        {
+            RepoItemInfo _startInfo;
+
+            /// <summary>
+            /// Creates a new Explorer  folder.
+            /// </summary>
+            public ExplorerAppFolder(RepoGenBaseFolder parentFolder) :
+                    base("Explorer", "/menubar[@class='Shell_TrayWnd']", parentFolder, 30000, null, true, "1910e180-f162-486e-9436-358600c065d7", "")
+            {
+                _startInfo = new RepoItemInfo(this, "Start", "?/?/button[@accessiblename='Start']", 30000, null, "69f6c061-8d6b-4ff1-8c6c-74207faaa372");
+            }
+
+            /// <summary>
+            /// The Self item.
+            /// </summary>
+            [RepositoryItem("1910e180-f162-486e-9436-358600c065d7")]
+            public virtual Ranorex.MenuBar Self
+            {
+                get
+                {
+                    return _selfInfo.CreateAdapter<Ranorex.MenuBar>(true);
+                }
+            }
+
+            /// <summary>
+            /// The Self item info.
+            /// </summary>
+            [RepositoryItemInfo("1910e180-f162-486e-9436-358600c065d7")]
+            public virtual RepoItemInfo SelfInfo
+            {
+                get
+                {
+                    return _selfInfo;
+                }
+            }
+
+            /// <summary>
+            /// The Start item.
+            /// </summary>
+            [RepositoryItem("69f6c061-8d6b-4ff1-8c6c-74207faaa372")]
+            public virtual Ranorex.Button Start
+            {
+                get
+                {
+                    return _startInfo.CreateAdapter<Ranorex.Button>(true);
+                }
+            }
+
+            /// <summary>
+            /// The Start item info.
+            /// </summary>
+            [RepositoryItemInfo("69f6c061-8d6b-4ff1-8c6c-74207faaa372")]
+            public virtual RepoItemInfo StartInfo
+            {
+                get
+                {
+                    return _startInfo;
+                }
+            }
+        }
+
     }
 #pragma warning restore 0436
 }
