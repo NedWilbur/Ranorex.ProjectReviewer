@@ -93,11 +93,12 @@ namespace Ranorex.ProjectReviewer
                 //TODO:SEAN
 
                 IEnumerable<XElement> allChildTestCases = testSuite.Descendants("childhierarchy").Descendants("testcase");
-                foreach(XElement testmodule in allChildTestCases)
+                foreach(XElement testCase in allChildTestCases)
+             
                 {
-                    XAttribute enabledId = testmodule.Attribute("id");
-                    
-                        Write("we got a problem");
+                    if (!testCase.Elements().Any())
+                        Write("test");
+                
                 }
 
                     //Loop all Modules
