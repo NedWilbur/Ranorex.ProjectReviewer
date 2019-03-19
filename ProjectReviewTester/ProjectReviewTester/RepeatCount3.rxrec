@@ -31,11 +31,44 @@ rxversion="9.0">
 		enabled="True"
 		optional="False">
 			<comment>
-				123
 			</comment>
 			<bindings>
 			</bindings>
 		</explicitdelayitem>
+		<loggingrecorditem
+		category="User"
+		enabled="False"
+		message=""
+		optional="False"
+		reportlevel="Info;20"
+		searchpropertyid="11265fad-78cf-4523-bbe3-26b872783743">
+			<comment>
+				Disabled Item Test
+			</comment>
+			<bindings>
+			</bindings>
+		</loggingrecorditem>
+		<separatoritem
+		enabled="True"
+		optional="False">
+			<comment>
+				SeperatorTest
+			</comment>
+			<bindings>
+			</bindings>
+		</separatoritem>
+		<loggingrecorditem
+		category="User"
+		enabled="True"
+		message=""
+		optional="False"
+		reportlevel="Info;20"
+		searchpropertyid="24bfe8d6-5539-4fe0-9832-9e9c1fd07773">
+			<comment>
+			</comment>
+			<bindings>
+			</bindings>
+		</loggingrecorditem>
 	</recorditems>
 	<repository
 	id="502ec0b3-c478-4a9f-a7d3-9108fe09c94c"

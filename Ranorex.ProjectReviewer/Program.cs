@@ -191,21 +191,39 @@ namespace Ranorex.ProjectReviewer
                 if (repeatCount != 1)
                     Write($"Repeat count = ({repeatCount}) (generally = 1)", moduleName);
 
-                //Check if turbomode = True
+                //TODO: Check if turbomode = True
 
-                //Check Speed Factor not equal to 1
+                //TODO: Check Speed Factor not equal to 1
 
-                //Check for default values on variables
+                //TODO: Check for default values on variables
 
-                //Check for unused variables
-                    
-                //Check for at least 1 action comment
+                //TODO:Check for unused variable
 
-                //Check for static delays
+                //Loop all actions (aka 'recorditems')
+                IEnumerable<XElement> allActions = recordTable.Element("recorditems").Elements();
 
-                //Check for disabled actions
+                //Check if Action count > 15
+                if (allActions.Count() > 15)
+                    Write($"More than 15 actions ({allActions.Count()})", moduleName);
 
-                //Check for repo item bindings (only if required)
+                foreach (XElement action in allActions)
+                {
+                    //TODO: Check for at least 1 action comment
+
+                    //Check for static delays
+                    if (action.Name == "explicitdelayitem")
+                        Write($"Static delay found! ({action.Attribute("duration").Value})", moduleName);
+
+                    //Check for disabled actions
+                    if (action.Attribute("enabled").Value == "False")
+                        Write($"Disabled '{action.Name}' action found", moduleName);
+
+                    //TODO: Check for repo item bindings (only if required)
+
+                    //TODO: Report line with no message
+
+                    //TODO: Check for seperators (indicating for possible module split)
+                }
             }
         }
 

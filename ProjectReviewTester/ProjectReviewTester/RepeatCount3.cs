@@ -79,9 +79,16 @@ namespace ProjectReviewTester
 
             Init();
 
-            // 123
-            Report.Log(ReportLevel.Info, "Delay", "123\r\nWaiting for 500ms.", new RecordItemIndex(0));
+            Report.Log(ReportLevel.Info, "Delay", "Waiting for 500ms.", new RecordItemIndex(0));
             Delay.Duration(500, false);
+            
+            // Disabled Item Test
+            //Report.Log(ReportLevel.Info, "User", "", new RecordItemIndex(1));
+            
+            // SeperatorTest
+            Report.Log(ReportLevel.Info, "Section", "SeperatorTest", new RecordItemIndex(2));
+            
+            Report.Log(ReportLevel.Info, "User", "", new RecordItemIndex(3));
             
         }
 
