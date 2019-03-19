@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<repository
+name="ProjectReviewTesterRepository"
+id="502ec0b3-c478-4a9f-a7d3-9108fe09c94c"
+rxversion="9.0">
+  <codegen
+  classname="ProjectReviewTesterRepository"
+  namespace="ProjectReviewTester"/>
+  <rootfolder
+  name="Root"
+  id="d1f376e7-b334-4b42-b75b-58eca915fdc9"
+  searchtimeout="30000ms"
+  capname="unknown"
+  isrooted="True"
+  usecache="True">
+    <basepath/>
+  </rootfolder>
+  <variables/>
+</repository>

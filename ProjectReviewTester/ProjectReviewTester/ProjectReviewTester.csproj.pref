@@ -1,0 +1,11 @@
+﻿<Properties>
+  <Array name="active">
+    <Element value="ProjectReviewTester.rxtst" />
+  </Array>
+  <Array name="bookmarks" />
+  <Array name="files">
+    <Element value="ProjectReviewTester.rxtst" />
+    <Element value="Recording1.rxrec" />
+  </Array>
+  <Properties name="projectSavedData" />
+</Properties>

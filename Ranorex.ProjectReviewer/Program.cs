@@ -18,10 +18,8 @@ namespace Ranorex.ProjectReviewer
             //Get Solution File Path
             Console.Write("Compress Solution File Path: ");
             solutionFilePath = Console.ReadLine();
-            if (solutionFilePath == "1")
-                solutionFilePath = @"C:\Users\Ned\Documents\Ranorex\RanorexStudio Projects\SampleSolution\";
-            if (solutionFilePath == "2")
-                solutionFilePath = @"C:\Users\Sean Perrotta\Documents\Ranorex\RanorexStudio Projects\TestSolutionForProject\TestSolutionForProject";
+            if (string.IsNullOrEmpty(solutionFilePath))
+                solutionFilePath = @"..\..\..\ProjectReviewTester\";
 
             //Inspect Files
             InspectTestSuites();
@@ -103,19 +101,15 @@ namespace Ranorex.ProjectReviewer
                 }
 
                 //Check for empty test containers
-                //TODO:SEAN
-
                 IEnumerable<XElement> allChildTestCases = testSuite.Descendants("childhierarchy").Descendants("testcase");
                 foreach(XElement testCase in allChildTestCases)
-             
                 {
                     if (!testCase.Elements().Any())
                         Write("test");
-                
                 }
 
-                    //Loop all Modules
-                    IEnumerable<XElement> allFlatModules = testSuite.Descendants("flatlistofchildren").Descendants("testmodule");
+                //Loop all Modules
+                IEnumerable<XElement> allFlatModules = testSuite.Descendants("flatlistofchildren").Descendants("testmodule");
                 foreach (XElement module in allFlatModules)
                 {
                     //Check for disabled modules 
@@ -192,9 +186,9 @@ namespace Ranorex.ProjectReviewer
                 //TODO NED: Fix XML reading
 
                 //Check Repeat Count
-                int repeatCount = int.Parse(recordingModuleXML.Element("repeatcount").Value);
-                if (repeatCount != 1)
-                    Write($"Repeat count = ({repeatCount}) (generally = 1)");
+                //int repeatCount = int.Parse(recordingModuleXML.Element("repeatcount").Value);
+                //if (repeatCount != 1)
+                //    Write($"Repeat count = ({repeatCount}) (generally = 1)");
             }
         }
 
