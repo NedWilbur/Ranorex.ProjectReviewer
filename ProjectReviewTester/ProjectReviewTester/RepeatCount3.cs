@@ -79,6 +79,10 @@ namespace ProjectReviewTester
 
             Init();
 
+            // 123
+            Report.Log(ReportLevel.Info, "Delay", "123\r\nWaiting for 500ms.", new RecordItemIndex(0));
+            Delay.Duration(500, false);
+            
         }
 
 #region Image Feature Data
