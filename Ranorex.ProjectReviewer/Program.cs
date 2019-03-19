@@ -105,7 +105,7 @@ namespace Ranorex.ProjectReviewer
                     IEnumerable<XElement> allFlatModules = testSuite.Descendants("flatlistofchildren").Descendants("testmodule");
                 foreach (XElement module in allFlatModules)
                 {
-                    //Check for disabled modules
+                    //Check for disabled modules 
                     XAttribute enabledAttribute = module.Attribute("enabled");
                     if (enabledAttribute == null)
                         continue;
