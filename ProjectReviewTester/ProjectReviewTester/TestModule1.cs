@@ -24,29 +24,29 @@ namespace ProjectReviewTester
 {
 #pragma warning disable 0436 //(CS0436) The type 'type' in 'assembly' conflicts with the imported type 'type2' in 'assembly'. Using the type defined in 'assembly'.
     /// <summary>
-    ///The RepeatCount3 recording.
+    ///The TestModule1 recording.
     /// </summary>
     [TestModule("8a3a6c79-fec6-4523-9919-8e4e47b86878", ModuleType.Recording, 3)]
-    public partial class RepeatCount3 : ITestModule
+    public partial class TestModule1 : ITestModule
     {
         /// <summary>
         /// Holds an instance of the ProjectReviewTesterRepository repository.
         /// </summary>
         public static ProjectReviewTesterRepository repo = ProjectReviewTesterRepository.Instance;
 
-        static RepeatCount3 instance = new RepeatCount3();
+        static TestModule1 instance = new TestModule1();
 
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
-        public RepeatCount3()
+        public TestModule1()
         {
         }
 
         /// <summary>
         /// Gets a static instance of this recording.
         /// </summary>
-        public static RepeatCount3 Instance
+        public static TestModule1 Instance
         {
             get { return instance; }
         }
@@ -79,16 +79,23 @@ namespace ProjectReviewTester
 
             Init();
 
-            Report.Log(ReportLevel.Info, "Delay", "Waiting for 500ms.", new RecordItemIndex(0));
+            // Static Delay
+            Report.Log(ReportLevel.Info, "Delay", "Static Delay\r\nWaiting for 500ms.", new RecordItemIndex(0));
             Delay.Duration(500, false);
             
-            // Disabled Item Test
+            // Disabled Item
             //Report.Log(ReportLevel.Info, "User", "", new RecordItemIndex(1));
             
-            // SeperatorTest
-            Report.Log(ReportLevel.Info, "Section", "SeperatorTest", new RecordItemIndex(2));
+            // Seperator Exists
+            Report.Log(ReportLevel.Info, "Section", "Seperator Exists", new RecordItemIndex(2));
             
+            // No Message Log
             Report.Log(ReportLevel.Info, "User", "", new RecordItemIndex(3));
+            
+            // No Repo Item
+            Report.Log(ReportLevel.Info, "Mouse", "No Repo Item\r\nMouse Left Click item 'FormRun.Text1001' at Center.", repo.FormRun.Text1001Info, new RecordItemIndex(4));
+            repo.FormRun.Text1001.Click();
+            Delay.Milliseconds(200);
             
         }
 

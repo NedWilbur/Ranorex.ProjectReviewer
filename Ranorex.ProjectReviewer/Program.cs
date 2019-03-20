@@ -60,17 +60,36 @@ namespace Ranorex.ProjectReviewer
             
 
         /// <summary>
-        /// Outputs data to console (and eventually CSV file)
+        /// 
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="itemName"></param>
-        static void Write(string itemName, string message)
+        /// <param name="itemName">File name</param>
+        /// <param name="message">Description of issue</param>
+        /// <param name="severity">1-3 (3 needs immediate attention)</param>
+        static void Write(string itemName, string message, int severity = 0)
         {
+            //Write to console
+            switch (severity)
+            {
+                case 1:
+                    Console.BackgroundColor = ConsoleColor.DarkGray;
+                    break;
+                case 2:
+                    Console.BackgroundColor = ConsoleColor.DarkYellow;
+                    break;
+                case 3:
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    break;
+                default:
+                    Console.ResetColor();
+                    break;
+            }
+
             Console.WriteLine(
                     $"{writeCatagory,-15} | " +
                     $"{itemName,-25} | " +
                     $"{message,5}"
                   );
+            Console.ResetColor();
 
             //TODO: Write to CSV file
         }
@@ -105,7 +124,7 @@ namespace Ranorex.ProjectReviewer
                 {
                     //Check for TC descriptions
                     if (!TCContainsDescription(tc))
-                        Write(tc.Attribute("name").Value, "Test case is missing a description");
+                        Write(tc.Attribute("name").Value, "Test case is missing a description", 1);
                 }
 
                 // TO DO add empty test container name to write
@@ -115,7 +134,7 @@ namespace Ranorex.ProjectReviewer
                 {
                     //TODO - Add TS name to below message
                     if (!testCase.Elements().Any())
-                        Write(testCase.Attribute("name").Value, "Testcase is empty");
+                        Write(testCase.Attribute("name").Value, "Testcase is empty", 2);
                 }
 
                 //Loop all Modules
@@ -129,7 +148,7 @@ namespace Ranorex.ProjectReviewer
 
                     //TODO - Add TS name to below message
                     if (enabledAttribute.Value == "False")
-                        Write(module.Attribute("name").Value, "Disabled module in test suite");
+                        Write(module.Attribute("name").Value, "Disabled module in test suite", 1);
                     
                 }
             }
@@ -160,7 +179,7 @@ namespace Ranorex.ProjectReviewer
         static void SetupCount(XDocument testSuite)
         {
             int count = testSuite.Descendants("flatlistofchildren").Descendants("setup").Count();
-            Write("TS NAME TODO", "Total [SETUP] regions found: " + count);
+            Write("TODO:TS NAME", "Total [SETUP] regions found: " + count);
         }
 
         /// <summary>
@@ -201,7 +220,7 @@ namespace Ranorex.ProjectReviewer
                 //Check Repeat Count
                 int repeatCount = int.Parse(recordTable.Element("repeatcount").Value);
                 if (repeatCount != 1)
-                    Write(moduleName, $"Repeat count = ({repeatCount}) (generally = 1)");
+                    Write(moduleName, $"Repeat count = ({repeatCount}) (generally = 1)", 1);
 
                 //TODO: Check if turbomode = True
 
@@ -216,7 +235,7 @@ namespace Ranorex.ProjectReviewer
 
                 //Check if Action count > 15
                 if (allActions.Count() > 15)
-                    Write(moduleName, $"More than 15 actions ({allActions.Count()})");
+                    Write(moduleName, $"More than 15 actions ({allActions.Count()})", 2);
 
                 foreach (XElement action in allActions)
                 {
@@ -224,11 +243,11 @@ namespace Ranorex.ProjectReviewer
 
                     //Check for static delays
                     if (action.Name == "explicitdelayitem")
-                        Write(moduleName, $"Static delay found! ({action.Attribute("duration").Value})");
+                        Write(moduleName, $"Static delay found! ({action.Attribute("duration").Value})", 3);
 
                     //Check for disabled actions
                     if (action.Attribute("enabled").Value == "False")
-                        Write(moduleName, $"Disabled '{action.Name}' action found");
+                        Write(moduleName, $"Disabled '{action.Name}' action found", 1);
 
                     //TODO: Check for repo item bindings (only if required)
 
@@ -236,7 +255,7 @@ namespace Ranorex.ProjectReviewer
 
                     //TODO: Check for seperators (indicating for possible module split)
                     if (action.Name == "separatoritem")
-                        Write(moduleName, $"Seperator found, module may be able to be split into smaller modules (Text: {Regex.Replace(action.Element("comment").Value, @"\s+", "")})");
+                        Write(moduleName, $"Seperator found, module may be able to be split into smaller modules (Text: {Regex.Replace(action.Element("comment").Value, @"\s+", "")})", 2);
                 }
             }
         }

@@ -86,7 +86,7 @@ rxversion="9.0">
 	</repository>
 	<usercodefile
 	lang="CSharp">
-		RepeatCount3.UserCode.cs
+		TestModule1.UserCode.cs
 	</usercodefile>
 	<references>
 	</references>
