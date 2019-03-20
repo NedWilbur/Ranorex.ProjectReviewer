@@ -83,12 +83,11 @@ namespace Ranorex.ProjectReviewer
                     Console.ResetColor();
                     break;
             }
-
             Console.WriteLine(
+                    $"{severity,-1} | " +
                     $"{writeCatagory,-15} | " +
-                    $"{itemName,-25} | " +
-                    $"{message,5}"
-                  );
+                    $"{itemName,-20} | " +
+                    $"{message,5}");
             Console.ResetColor();
 
             //TODO: Write to CSV file
@@ -237,7 +236,7 @@ namespace Ranorex.ProjectReviewer
 
                     //TODO: Check for seperators (indicating for possible module split)
                     if (action.Name == "separatoritem")
-                        Write(moduleName, $"Seperator found, module may be able to be split into smaller modules (Text: {Regex.Replace(action.Element("comment").Value, @"\s+", "")})", 2);
+                        Write(moduleName, $"Seperator found - may be split into smaller modules (Text: {Regex.Replace(action.Element("comment").Value, @"\s+", "")})", 2);
                 }
             }
         }
