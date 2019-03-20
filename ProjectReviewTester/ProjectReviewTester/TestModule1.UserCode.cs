@@ -22,7 +22,7 @@ using Ranorex.Core.Testing;
 
 namespace ProjectReviewTester
 {
-    public partial class RepeatCount3
+    public partial class TestModule1
     {
         /// <summary>
         /// This method gets called right after the recording has been started.

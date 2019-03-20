@@ -20,7 +20,7 @@ rxversion="9.0">
 		True
 	</useDefaultItemLogging>
 	<codegen
-	classname="RepeatCount3"
+	classname="TestModule1"
 	namespace="ProjectReviewTester">
 	</codegen>
 	<variables>

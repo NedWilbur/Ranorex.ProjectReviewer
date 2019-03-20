@@ -27,7 +27,7 @@ namespace ProjectReviewTester
     public partial class ProjectReviewTesterRepository : RepoGenBaseFolder
     {
         static ProjectReviewTesterRepository instance = new ProjectReviewTesterRepository();
-        ProjectReviewTesterRepositoryFolders.ExplorerAppFolder _explorer;
+        ProjectReviewTesterRepositoryFolders.FormRunAppFolder _formrun;
 
         /// <summary>
         /// Gets the singleton class instance representing the ProjectReviewTesterRepository element repository.
@@ -44,7 +44,7 @@ namespace ProjectReviewTester
         public ProjectReviewTesterRepository() 
             : base("ProjectReviewTesterRepository", "/", null, 0, false, "d1f376e7-b334-4b42-b75b-58eca915fdc9", ".\\RepositoryImages\\ProjectReviewTesterRepositoryd1f376e7.rximgres")
         {
-            _explorer = new ProjectReviewTesterRepositoryFolders.ExplorerAppFolder(this);
+            _formrun = new ProjectReviewTesterRepositoryFolders.FormRunAppFolder(this);
         }
 
 #region Variables
@@ -64,12 +64,12 @@ namespace ProjectReviewTester
         }
 
         /// <summary>
-        /// The Explorer folder.
+        /// The FormRun folder.
         /// </summary>
-        [RepositoryFolder("1910e180-f162-486e-9436-358600c065d7")]
-        public virtual ProjectReviewTesterRepositoryFolders.ExplorerAppFolder Explorer
+        [RepositoryFolder("a38b661d-e88e-4815-b34f-4c78943c358c")]
+        public virtual ProjectReviewTesterRepositoryFolders.FormRunAppFolder FormRun
         {
-            get { return _explorer; }
+            get { return _formrun; }
         }
     }
 
@@ -80,38 +80,40 @@ namespace ProjectReviewTester
     public partial class ProjectReviewTesterRepositoryFolders
     {
         /// <summary>
-        /// The ExplorerAppFolder folder.
+        /// The FormRunAppFolder folder.
         /// </summary>
-        [RepositoryFolder("1910e180-f162-486e-9436-358600c065d7")]
-        public partial class ExplorerAppFolder : RepoGenBaseFolder
+        [RepositoryFolder("a38b661d-e88e-4815-b34f-4c78943c358c")]
+        public partial class FormRunAppFolder : RepoGenBaseFolder
         {
-            RepoItemInfo _startInfo;
+            RepoItemInfo _buttonokInfo;
+            RepoItemInfo _text1001Info;
 
             /// <summary>
-            /// Creates a new Explorer  folder.
+            /// Creates a new FormRun  folder.
             /// </summary>
-            public ExplorerAppFolder(RepoGenBaseFolder parentFolder) :
-                    base("Explorer", "/menubar[@class='Shell_TrayWnd']", parentFolder, 30000, null, true, "1910e180-f162-486e-9436-358600c065d7", "")
+            public FormRunAppFolder(RepoGenBaseFolder parentFolder) :
+                    base("FormRun", "/form[@title='Run']", parentFolder, 30000, null, true, "a38b661d-e88e-4815-b34f-4c78943c358c", "")
             {
-                _startInfo = new RepoItemInfo(this, "Start", "?/?/button[@accessiblename='Start']", 30000, null, "69f6c061-8d6b-4ff1-8c6c-74207faaa372");
+                _buttonokInfo = new RepoItemInfo(this, "ButtonOK", "button[@text='OK']", 30000, null, "c1ff9891-fdbc-4c63-b962-131f0add012c");
+                _text1001Info = new RepoItemInfo(this, "Text1001", "?/?/text[@controlid='1001']", 30000, null, "0e6d114b-87cc-4f3b-88ac-aa7621068ab8");
             }
 
             /// <summary>
             /// The Self item.
             /// </summary>
-            [RepositoryItem("1910e180-f162-486e-9436-358600c065d7")]
-            public virtual Ranorex.MenuBar Self
+            [RepositoryItem("a38b661d-e88e-4815-b34f-4c78943c358c")]
+            public virtual Ranorex.Form Self
             {
                 get
                 {
-                    return _selfInfo.CreateAdapter<Ranorex.MenuBar>(true);
+                    return _selfInfo.CreateAdapter<Ranorex.Form>(true);
                 }
             }
 
             /// <summary>
             /// The Self item info.
             /// </summary>
-            [RepositoryItemInfo("1910e180-f162-486e-9436-358600c065d7")]
+            [RepositoryItemInfo("a38b661d-e88e-4815-b34f-4c78943c358c")]
             public virtual RepoItemInfo SelfInfo
             {
                 get
@@ -121,26 +123,50 @@ namespace ProjectReviewTester
             }
 
             /// <summary>
-            /// The Start item.
+            /// The ButtonOK item.
             /// </summary>
-            [RepositoryItem("69f6c061-8d6b-4ff1-8c6c-74207faaa372")]
-            public virtual Ranorex.Button Start
+            [RepositoryItem("c1ff9891-fdbc-4c63-b962-131f0add012c")]
+            public virtual Ranorex.Button ButtonOK
             {
                 get
                 {
-                    return _startInfo.CreateAdapter<Ranorex.Button>(true);
+                    return _buttonokInfo.CreateAdapter<Ranorex.Button>(true);
                 }
             }
 
             /// <summary>
-            /// The Start item info.
+            /// The ButtonOK item info.
             /// </summary>
-            [RepositoryItemInfo("69f6c061-8d6b-4ff1-8c6c-74207faaa372")]
-            public virtual RepoItemInfo StartInfo
+            [RepositoryItemInfo("c1ff9891-fdbc-4c63-b962-131f0add012c")]
+            public virtual RepoItemInfo ButtonOKInfo
             {
                 get
                 {
-                    return _startInfo;
+                    return _buttonokInfo;
+                }
+            }
+
+            /// <summary>
+            /// The Text1001 item.
+            /// </summary>
+            [RepositoryItem("0e6d114b-87cc-4f3b-88ac-aa7621068ab8")]
+            public virtual Ranorex.Text Text1001
+            {
+                get
+                {
+                    return _text1001Info.CreateAdapter<Ranorex.Text>(true);
+                }
+            }
+
+            /// <summary>
+            /// The Text1001 item info.
+            /// </summary>
+            [RepositoryItemInfo("0e6d114b-87cc-4f3b-88ac-aa7621068ab8")]
+            public virtual RepoItemInfo Text1001Info
+            {
+                get
+                {
+                    return _text1001Info;
                 }
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -234,6 +235,8 @@ namespace Ranorex.ProjectReviewer
                     //TODO: Report line with no message
 
                     //TODO: Check for seperators (indicating for possible module split)
+                    if (action.Name == "separatoritem")
+                        Write(moduleName, $"Seperator found, module may be able to be split into smaller modules (Text: {Regex.Replace(action.Element("comment").Value, @"\s+", "")})");
                 }
             }
         }
