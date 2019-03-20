@@ -96,7 +96,7 @@ namespace Ranorex.ProjectReviewer
                 {
                     //Check for TC descriptions
                     if (!TCContainsDescription(tc))
-                        Write($"'{tc.Attribute("name").Value}' is missing a description");
+                        Write($"Test case is missing a description", tc.Attribute("name").Value);
                 }
                 // TO DO add empty test container name to write
                 //Check for empty test containers
@@ -104,7 +104,7 @@ namespace Ranorex.ProjectReviewer
                 foreach(XElement testCase in allChildTestCases)
                 {
                     if (!testCase.Elements().Any())
-                        Write($"'{testCase.Attribute("name").Value}' is empty");
+                        Write($"Testcase is empty", testCase.Attribute("name").Value);
                 }
 
                 //Loop all Modules
