@@ -114,8 +114,11 @@ namespace Ranorex.ProjectReviewer
                 XDocument testSuite = XDocument.Load(testSuiteFile);
 
                 //Check for Setup/Teardowns
-                SetupCount(testSuite);
-                TeardownCount(testSuite);
+                if (testSuite.Descendants("flatlistofchildren").Descendants("setup").Count() <= 0)
+                    Write("TODO TS NAME", "No [SETUP] regions found", 2);
+
+                if (testSuite.Descendants("flatlistofchildren").Descendants("teardown").Count() <= 0)
+                    Write("TODO TS NAME", "No [TEARDOWN] regions found", 3);
 
                 //Loop all TC in TS
                 IEnumerable<XElement> AllFlatTestCases = testSuite.Descendants("flatlistofchildren").Descendants("testcase");
@@ -149,7 +152,6 @@ namespace Ranorex.ProjectReviewer
                     //TODO - Add TS name to below message
                     if (enabledAttribute.Value == "False")
                         Write(module.Attribute("name").Value, "Disabled module in test suite", 1);
-                    
                 }
             }
         }
@@ -170,26 +172,6 @@ namespace Ranorex.ProjectReviewer
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Writes how many setup regions exists in a TS
-        /// </summary>
-        /// <param name="testSuite"></param>
-        static void SetupCount(XDocument testSuite)
-        {
-            int count = testSuite.Descendants("flatlistofchildren").Descendants("setup").Count();
-            Write("TODO:TS NAME", "Total [SETUP] regions found: " + count);
-        }
-
-        /// <summary>
-        /// Writes how many teardown regions exists in a TS
-        /// </summary>
-        /// <param name="testSuite"></param>
-        static void TeardownCount(XDocument testSuite)
-        {
-            int count = testSuite.Descendants("flatlistofchildren").Descendants("teardown").Count();
-            Write("TS NAME TODO", "Total [TEARDOWN] regions found: " + count);
         }
 
         //  TS
