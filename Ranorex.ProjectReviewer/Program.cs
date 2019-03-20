@@ -21,6 +21,11 @@ namespace Ranorex.ProjectReviewer
             if (string.IsNullOrEmpty(solutionFilePath))
                 solutionFilePath = @"..\..\..\ProjectReviewTester\";
 
+            //Write output header
+            Console.WriteLine(string.Empty);
+            writeCatagory = "__Category__";
+            Write("__Item__", "__Issue Description___");
+
             //Inspect Files
             InspectTestSuites();
             InspectRecordingModulesXML();
@@ -28,7 +33,7 @@ namespace Ranorex.ProjectReviewer
             InspectRecordingModulesUsercodeCS();
 
             //Finished
-            Console.WriteLine("Finished, press any key to exit.");
+            Console.WriteLine("\nFinished, press any key to exit.");
             Console.ReadKey();
         }
 
@@ -45,10 +50,9 @@ namespace Ranorex.ProjectReviewer
 
             if (foundFiles.Length <= 0)
             {
-                Write($"No {extension} files found!");
+                Write("ERROR", $"No {extension} files found!");
                 return null;
             }
-            Console.WriteLine($"{foundFiles.Length.ToString()} {extension} files found!");
 
             return foundFiles;
         }
@@ -59,9 +63,14 @@ namespace Ranorex.ProjectReviewer
         /// </summary>
         /// <param name="message"></param>
         /// <param name="itemName"></param>
-        static void Write(string message, string itemName = null)
+        static void Write(string itemName, string message)
         {
-            Console.WriteLine($"{writeCatagory}\t{message}\t{itemName}");
+            Console.WriteLine(
+                    $"{writeCatagory,-15} | " +
+                    $"{itemName,-25} | " +
+                    $"{message,5}"
+                  );
+
             //TODO: Write to CSV file
         }
 
@@ -69,7 +78,6 @@ namespace Ranorex.ProjectReviewer
         {
             //Set catagory for output file
             writeCatagory = "Test Suite";
-            Console.WriteLine("Starting inspection of test suite");
 
             //Get all TS files
             string[] testSuites = FindFiles("rxtst");
@@ -96,15 +104,17 @@ namespace Ranorex.ProjectReviewer
                 {
                     //Check for TC descriptions
                     if (!TCContainsDescription(tc))
-                        Write($"Test case is missing a description", tc.Attribute("name").Value);
+                        Write(tc.Attribute("name").Value, "Test case is missing a description");
                 }
+
                 // TO DO add empty test container name to write
                 //Check for empty test containers
                 IEnumerable<XElement> allChildTestCases = testSuite.Descendants("childhierarchy").Descendants("testcase");
                 foreach(XElement testCase in allChildTestCases)
                 {
+                    //TODO - Add TS name to below message
                     if (!testCase.Elements().Any())
-                        Write($"Testcase is empty", testCase.Attribute("name").Value);
+                        Write(testCase.Attribute("name").Value, "Testcase is empty");
                 }
 
                 //Loop all Modules
@@ -116,8 +126,10 @@ namespace Ranorex.ProjectReviewer
                     if (enabledAttribute == null)
                         continue;
 
+                    //TODO - Add TS name to below message
                     if (enabledAttribute.Value == "False")
-                        Write($"{module.Attribute("name").Value} disabled!");
+                        Write(module.Attribute("name").Value, "Disabled module in test suite");
+                    
                 }
             }
         }
@@ -147,7 +159,7 @@ namespace Ranorex.ProjectReviewer
         static void SetupCount(XDocument testSuite)
         {
             int count = testSuite.Descendants("flatlistofchildren").Descendants("setup").Count();
-            Write("Total [SETUP] regions found: " + count);
+            Write("TS NAME TODO", "Total [SETUP] regions found: " + count);
         }
 
         /// <summary>
@@ -157,7 +169,7 @@ namespace Ranorex.ProjectReviewer
         static void TeardownCount(XDocument testSuite)
         {
             int count = testSuite.Descendants("flatlistofchildren").Descendants("teardown").Count();
-            Write("Total [TEARDOWN] regions found: " + count);
+            Write("TS NAME TODO", "Total [TEARDOWN] regions found: " + count);
         }
 
         //  TS
@@ -168,7 +180,6 @@ namespace Ranorex.ProjectReviewer
         {
             //Set catagory for output file
             writeCatagory = "Module";
-            Console.WriteLine("Starting inspection of recirding module's XML");
 
             //Get all recording modules files
             string[] recordingModules = FindFiles("rxrec");
@@ -189,7 +200,7 @@ namespace Ranorex.ProjectReviewer
                 //Check Repeat Count
                 int repeatCount = int.Parse(recordTable.Element("repeatcount").Value);
                 if (repeatCount != 1)
-                    Write($"Repeat count = ({repeatCount}) (generally = 1)", moduleName);
+                    Write(moduleName, $"Repeat count = ({repeatCount}) (generally = 1)");
 
                 //TODO: Check if turbomode = True
 
@@ -204,7 +215,7 @@ namespace Ranorex.ProjectReviewer
 
                 //Check if Action count > 15
                 if (allActions.Count() > 15)
-                    Write($"More than 15 actions ({allActions.Count()})", moduleName);
+                    Write(moduleName, $"More than 15 actions ({allActions.Count()})");
 
                 foreach (XElement action in allActions)
                 {
@@ -212,11 +223,11 @@ namespace Ranorex.ProjectReviewer
 
                     //Check for static delays
                     if (action.Name == "explicitdelayitem")
-                        Write($"Static delay found! ({action.Attribute("duration").Value})", moduleName);
+                        Write(moduleName, $"Static delay found! ({action.Attribute("duration").Value})");
 
                     //Check for disabled actions
                     if (action.Attribute("enabled").Value == "False")
-                        Write($"Disabled '{action.Name}' action found", moduleName);
+                        Write(moduleName, $"Disabled '{action.Name}' action found");
 
                     //TODO: Check for repo item bindings (only if required)
 
