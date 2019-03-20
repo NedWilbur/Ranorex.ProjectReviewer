@@ -96,15 +96,15 @@ namespace Ranorex.ProjectReviewer
                 {
                     //Check for TC descriptions
                     if (!TCContainsDescription(tc))
-                        Write($"'{tc.Name.ToString()}' missing description");
+                        Write($"'{tc.Attribute("name").Value}' is missing a description");
                 }
-
+                // TO DO add empty test container name to write
                 //Check for empty test containers
                 IEnumerable<XElement> allChildTestCases = testSuite.Descendants("childhierarchy").Descendants("testcase");
                 foreach(XElement testCase in allChildTestCases)
                 {
                     if (!testCase.Elements().Any())
-                        Write("test");
+                        Write($"'{testCase.Attribute("name").Value}' is empty");
                 }
 
                 //Loop all Modules

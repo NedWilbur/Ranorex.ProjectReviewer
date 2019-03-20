@@ -53,10 +53,6 @@ rxversion="9.0">
 			ref="d45f36d5-4442-4793-9296-36bd903a5088"
 			type="Recording">
 			</testmodule>
-			<smartfoldernode
-			id="c378e187-08b1-4177-aff6-a239105aa667"
-			name="EmptySmartFolder">
-			</smartfoldernode>
 			<testsuite
 			ReportTime="RelativeToTestSuiteStartTime"
 			TracingScreenshotMode="Foreground"
@@ -120,10 +116,6 @@ rxversion="9.0">
 					<testcase
 					id="762c176e-47cb-45ad-9aca-59f831ab92f2"
 					name="EmptyTestCase">
-						<smartfoldernode
-						id="c378e187-08b1-4177-aff6-a239105aa667"
-						name="EmptySmartFolder">
-						</smartfoldernode>
 					</testcase>
 					<teardown
 					id="3679d187-eafe-48a7-be65-8ee3bf4ac8b7"
@@ -150,9 +142,6 @@ rxversion="9.0">
 			</testcontainer>
 			<testcontainer
 			id="762c176e-47cb-45ad-9aca-59f831ab92f2">
-			</testcontainer>
-			<testcontainer
-			id="c378e187-08b1-4177-aff6-a239105aa667">
 			</testcontainer>
 		</testconfiguration>
 	</testconfigurations>

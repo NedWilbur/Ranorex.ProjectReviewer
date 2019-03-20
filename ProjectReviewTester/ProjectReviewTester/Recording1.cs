@@ -79,10 +79,6 @@ namespace ProjectReviewTester
 
             Init();
 
-            Report.Log(ReportLevel.Info, "Invoke action", "Invoking EnsureVisible() on item 'Explorer.Start'.", repo.Explorer.StartInfo, new RecordItemIndex(0));
-            repo.Explorer.Start.EnsureVisible();
-            Delay.Milliseconds(0);
-            
         }
 
 #region Image Feature Data
