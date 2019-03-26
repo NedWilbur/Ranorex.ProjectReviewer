@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <recordtable
 embeddedrepository="False"
-id="d45f36d5-4442-4793-9296-36bd903a5088"
+id="171fbe4a-809e-4522-92ae-080b7604ef1c"
 mode="Global"
 rxversion="9.0">
 	<repeatcount>
 		1
 	</repeatcount>
 	<turbomode>
-		True
+		False
 	</turbomode>
 	<genreport>
 		True
@@ -20,7 +20,7 @@ rxversion="9.0">
 		True
 	</useDefaultItemLogging>
 	<codegen
-	classname="Recording1"
+	classname="Recording3"
 	namespace="ProjectReviewTester">
 	</codegen>
 	<variables>
@@ -43,7 +43,7 @@ rxversion="9.0">
 	</repository>
 	<usercodefile
 	lang="CSharp">
-		Recording1.UserCode.cs
+		Recording3.UserCode.cs
 	</usercodefile>
 	<references>
 	</references>

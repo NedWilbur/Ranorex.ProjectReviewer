@@ -24,29 +24,29 @@ namespace ProjectReviewTester
 {
 #pragma warning disable 0436 //(CS0436) The type 'type' in 'assembly' conflicts with the imported type 'type2' in 'assembly'. Using the type defined in 'assembly'.
     /// <summary>
-    ///The TestModule1 recording.
+    ///The Recording3 recording.
     /// </summary>
-    [TestModule("8a3a6c79-fec6-4523-9919-8e4e47b86878", ModuleType.Recording, 3)]
-    public partial class TestModule1 : ITestModule
+    [TestModule("171fbe4a-809e-4522-92ae-080b7604ef1c", ModuleType.Recording, 1)]
+    public partial class Recording3 : ITestModule
     {
         /// <summary>
         /// Holds an instance of the ProjectReviewTesterRepository repository.
         /// </summary>
         public static ProjectReviewTesterRepository repo = ProjectReviewTesterRepository.Instance;
 
-        static TestModule1 instance = new TestModule1();
+        static Recording3 instance = new Recording3();
 
         /// <summary>
         /// Constructs a new instance.
         /// </summary>
-        public TestModule1()
+        public Recording3()
         {
         }
 
         /// <summary>
         /// Gets a static instance of this recording.
         /// </summary>
-        public static TestModule1 Instance
+        public static Recording3 Instance
         {
             get { return instance; }
         }
@@ -79,17 +79,6 @@ namespace ProjectReviewTester
 
             Init();
 
-            Report.Log(ReportLevel.Info, "Delay", "Waiting for 500ms.", new RecordItemIndex(0));
-            Delay.Duration(500, false);
-            
-            // Disabled Item Test
-            //Report.Log(ReportLevel.Info, "User", "", new RecordItemIndex(1));
-            
-            // SeperatorTest
-            Report.Log(ReportLevel.Info, "Section", "SeperatorTest", new RecordItemIndex(2));
-            
-            Report.Log(ReportLevel.Info, "User", "", new RecordItemIndex(3));
-            
         }
 
 #region Image Feature Data
