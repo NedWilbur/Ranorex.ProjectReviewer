@@ -174,10 +174,6 @@ namespace Ranorex.ProjectReviewer
             return false;
         }
 
-        //  TS
-        //Empty tc
-        //Unused modules
-
         static void InspectRecordingModulesXML()
         {
             //Set catagory for output file
@@ -225,7 +221,7 @@ namespace Ranorex.ProjectReviewer
 
                     //Check for static delays
                     if (action.Name == "explicitdelayitem")
-                        Write(moduleName, $"Static delay found! ({action.Attribute("duration").Value})", 3);
+                        Write(moduleName, $"Static delay found ({action.Attribute("duration").Value})", 3);
 
                     //Check for disabled actions
                     if (action.Attribute("enabled").Value == "False")
@@ -233,7 +229,10 @@ namespace Ranorex.ProjectReviewer
 
                     //TODO: Check for repo item bindings (only if required)
 
-                    //TODO: Report line with no message
+                    //Report line with no message
+                    if (action.Name == "loggingrecorditem")
+                        if (string.IsNullOrEmpty(action.Attribute("message").Value))
+                            Write(moduleName, "Empty 'Log Message' action found", 1);
 
                     //TODO: Check for seperators (indicating for possible module split)
                     if (action.Name == "separatoritem")
@@ -253,13 +252,10 @@ namespace Ranorex.ProjectReviewer
         }
 
         //  MODUELS
-        //Long action count
-        //Headers = means can split?
         //Action comments
         //non-merged keyboard actions
-        //Static delays
         //Disabled Steps
-        //Options items?
+        //Optional items?
         //Fixed pixel mouse click lcoation
         //Empty module
         //Using {back} or shitty key presses

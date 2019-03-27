@@ -79,16 +79,26 @@ namespace ProjectReviewTester
 
             Init();
 
-            Report.Log(ReportLevel.Info, "Delay", "Waiting for 500ms.", new RecordItemIndex(0));
+            // Static Delay
+            Report.Log(ReportLevel.Info, "Delay", "Static Delay\r\nWaiting for 500ms.", new RecordItemIndex(0));
             Delay.Duration(500, false);
             
-            // Disabled Item Test
+            // Disabled Item
             //Report.Log(ReportLevel.Info, "User", "", new RecordItemIndex(1));
             
-            // SeperatorTest
-            Report.Log(ReportLevel.Info, "Section", "SeperatorTest", new RecordItemIndex(2));
+            // Seperator Exists
+            Report.Log(ReportLevel.Info, "Section", "Seperator Exists", new RecordItemIndex(2));
             
+            // No Message Log
             Report.Log(ReportLevel.Info, "User", "", new RecordItemIndex(3));
+            
+            // Message Log with message
+            Report.Log(ReportLevel.Info, "User", "Test123", new RecordItemIndex(4));
+            
+            // No Repo Item
+            Report.Log(ReportLevel.Info, "Mouse", "No Repo Item\r\nMouse Left Click item 'FormRun.Text1001' at Center.", repo.FormRun.Text1001Info, new RecordItemIndex(5));
+            repo.FormRun.Text1001.Click();
+            Delay.Milliseconds(200);
             
         }
 
