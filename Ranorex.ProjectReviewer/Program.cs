@@ -215,9 +215,10 @@ namespace Ranorex.ProjectReviewer
                 if (allActions.Count() > 15)
                     Write(moduleName, $"More than 15 actions ({allActions.Count()})", 2);
 
+                bool commentFound = false;
                 foreach (XElement action in allActions)
                 {
-                    //TODO: Check for at least 1 action comment
+                    //TODO: Write the culprit action number
 
                     //Check for static delays
                     if (action.Name == "explicitdelayitem")
@@ -242,15 +243,31 @@ namespace Ranorex.ProjectReviewer
                         if (action.Element("info") == null)
                             Write(moduleName, $"{action.Name} missing a repository item", 3);
 
-                    //Report line with no message
+                    //Check for report line without a message
                     if (action.Name == "loggingrecorditem")
                         if (string.IsNullOrEmpty(action.Attribute("message").Value))
                             Write(moduleName, "Empty 'Log Message' action found", 1);
 
-                    //TODO: Check for seperators (indicating for possible module split)
+                    //Check for seperators (indicating for possible module split)
                     if (action.Name == "separatoritem")
                         Write(moduleName, $"Seperator found - may be split into smaller modules (Text: {Regex.Replace(action.Element("comment").Value, @"\s+", "")})", 2);
+
+                    //Check for non-merged keyboard actions
+
+                    //Check for any action comments (output below loop)
+                    if (action.Element("comment") != null)
+                        commentFound = true;
+
+                    //Check for disabled steps
+
+                    //Check for fixed pixel mouse action spot
+
+                    //Check for empty modules (no actions)
+
+                    //Using {back} or shitty key presses
                 }
+                if (!commentFound)
+                    Write(moduleName, "No action comments found", 1);
             }
         }
 
@@ -264,13 +281,6 @@ namespace Ranorex.ProjectReviewer
 
         }
 
-        //  MODUELS
-        //Action comments
-        //non-merged keyboard actions
-        //Disabled Steps
-        //Optional items?
-        //Fixed pixel mouse click lcoation
-        //Empty module
-        //Using {back} or shitty key presses
+ 
     }
 }

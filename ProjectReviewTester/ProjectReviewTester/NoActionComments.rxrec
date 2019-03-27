@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<recordtable
+embeddedrepository="False"
+id="31a08acd-1cc9-4dac-b44d-c35154185f6b"
+mode="Global"
+rxversion="9.0">
+	<repeatcount>
+		1
+	</repeatcount>
+	<turbomode>
+		False
+	</turbomode>
+	<genreport>
+		True
+	</genreport>
+	<speedfactor>
+		1
+	</speedfactor>
+	<useDefaultItemLogging>
+		True
+	</useDefaultItemLogging>
+	<codegen
+	classname="NoActionComments"
+	namespace="ProjectReviewTester">
+	</codegen>
+	<variables>
+	</variables>
+	<recorditems>
+	</recorditems>
+	<repository
+	id="502ec0b3-c478-4a9f-a7d3-9108fe09c94c"
+	name="ProjectReviewTesterRepository"
+	relativepath="ProjectReviewTesterRepository.rxrep"
+	rxversion="9.0">
+		<codegen
+		classname="ProjectReviewTesterRepository"
+		namespace="ProjectReviewTester">
+		</codegen>
+		<rootfolder
+		id="d1f376e7-b334-4b42-b75b-58eca915fdc9"
+		name="_rootdummy_">
+		</rootfolder>
+	</repository>
+	<usercodefile
+	lang="CSharp">
+		NoActionComments.UserCode.cs
+	</usercodefile>
+	<references>
+	</references>
+</recordtable>

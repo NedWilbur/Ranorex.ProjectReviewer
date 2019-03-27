@@ -39,7 +39,7 @@ rxversion="9.0">
 		sy="1054"
 		warnoutofbounds="False">
 			<comment>
-				Repo Item
+				Repo Item (should not be detected)
 			</comment>
 			<bindings>
 			</bindings>
@@ -64,7 +64,6 @@ rxversion="9.0">
 		sy="1054"
 		warnoutofbounds="False">
 			<comment>
-				No Repo Item
 			</comment>
 			<bindings>
 			</bindings>

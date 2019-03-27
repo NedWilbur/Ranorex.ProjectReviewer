@@ -126,6 +126,18 @@
       <UserCode>true</UserCode>
       <id>0590b508-3322-4125-a45d-dfd7385165cb</id>
     </Compile>
+    <Compile Include="NoActionComments.cs">
+      <BoundTo>d8549794-b806-4ab9-b33e-0b4b6007ecb2</BoundTo>
+      <DependentUpon>NoActionComments.rxrec</DependentUpon>
+      <RecorderCode>true</RecorderCode>
+      <id>c688546a-c203-4349-9b17-4d5066b982e4</id>
+    </Compile>
+    <Compile Include="NoActionComments.UserCode.cs">
+      <BoundTo>d8549794-b806-4ab9-b33e-0b4b6007ecb2</BoundTo>
+      <DependentUpon>NoActionComments.rxrec</DependentUpon>
+      <UserCode>true</UserCode>
+      <id>b56d94f0-c9c0-4d6d-81ac-d93b0fa42d6c</id>
+    </Compile>
     <Compile Include="Program.cs">
       <id>8f6bf455-091c-4449-ab11-e264936fadab</id>
     </Compile>
@@ -200,6 +212,11 @@
       <BoundTo>6ae73c4b-058b-4530-8fd7-58a3f9ceb3d6</BoundTo>
       <id>ae4b7c1a-2958-40ab-a2eb-74e682c382f9</id>
       <recordtableid>e7eeab4e-b65f-40ff-bec8-75f5818d0b38</recordtableid>
+    </None>
+    <None Include="NoActionComments.rxrec">
+      <BoundTo>6ae73c4b-058b-4530-8fd7-58a3f9ceb3d6</BoundTo>
+      <id>d8549794-b806-4ab9-b33e-0b4b6007ecb2</id>
+      <recordtableid>31a08acd-1cc9-4dac-b44d-c35154185f6b</recordtableid>
     </None>
     <None Include="ProjectReviewTesterRepository.rximg">
       <BoundTo>6ae73c4b-058b-4530-8fd7-58a3f9ceb3d6</BoundTo>
