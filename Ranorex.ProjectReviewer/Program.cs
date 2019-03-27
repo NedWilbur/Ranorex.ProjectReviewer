@@ -87,7 +87,7 @@ namespace Ranorex.ProjectReviewer
             Console.WriteLine(
                     $"{severity,-1} | " +
                     $"{writeCatagory,-15} | " +
-                    $"{itemName,-20} | " +
+                    $"{itemName,-50} | " +
                     $"{message,5}");
             Console.ResetColor();
 
@@ -112,13 +112,14 @@ namespace Ranorex.ProjectReviewer
             {
                 //Create XML Reader for TS file
                 XDocument testSuite = XDocument.Load(testSuiteFile);
+                string testsuiteName = testSuiteFile.Split('\\').Last();
 
                 //Check for Setup/Teardowns
                 if (testSuite.Descendants("flatlistofchildren").Descendants("setup").Count() <= 0)
-                    Write("TODO TS NAME", "No [SETUP] regions found", 2);
+                    Write(testsuiteName, "No [SETUP] regions found", 2);
 
                 if (testSuite.Descendants("flatlistofchildren").Descendants("teardown").Count() <= 0)
-                    Write("TODO TS NAME", "No [TEARDOWN] regions found", 3);
+                    Write(testsuiteName, "No [TEARDOWN] regions found", 3);
 
                 //Loop all TC in TS
                 IEnumerable<XElement> AllFlatTestCases = testSuite.Descendants("flatlistofchildren").Descendants("testcase");
@@ -130,14 +131,12 @@ namespace Ranorex.ProjectReviewer
                         Write(tc.Attribute("name").Value, "Test case is missing a description", 1);
                 }
 
-                // TO DO add empty test container name to write
                 //Check for empty test containers
                 IEnumerable<XElement> allChildTestCases = testSuite.Descendants("childhierarchy").Descendants("testcase");
                 foreach(XElement testCase in allChildTestCases)
                 {
-                    //TODO - Add TS name to below message
                     if (!testCase.Elements().Any())
-                        Write(testCase.Attribute("name").Value, "Testcase is empty", 2);
+                        Write($"({testsuiteName}) {testCase.Attribute("name").Value}", "Testcase is empty", 2);
                 }
 
                 //Loop all Modules
@@ -149,10 +148,11 @@ namespace Ranorex.ProjectReviewer
                     if (enabledAttribute == null)
                         continue;
 
-                    //TODO - Add TS name to below message
                     if (enabledAttribute.Value == "False")
-                        Write(module.Attribute("name").Value, "Disabled module in test suite", 1);
+                        Write($"({testsuiteName}) {module.Attribute("name").Value}", "Disabled module in test suite", 1);
                 }
+
+                //TODO: Check for test configurations (exluding default 'TestRun')
             }
         }
 
