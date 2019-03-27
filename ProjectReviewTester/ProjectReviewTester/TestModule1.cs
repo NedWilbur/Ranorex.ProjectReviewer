@@ -95,6 +95,26 @@ namespace ProjectReviewTester
             // Message Log with message
             Report.Log(ReportLevel.Info, "User", "Test123", new RecordItemIndex(4));
             
+            // Good mouse click
+            Report.Log(ReportLevel.Info, "Mouse", "Good mouse click\r\nMouse Left Click item 'FormRun' at Center.", repo.FormRun.SelfInfo, new RecordItemIndex(5));
+            repo.FormRun.Self.Click();
+            Delay.Milliseconds(200);
+            
+            // Absolute pixel location
+            Report.Log(ReportLevel.Info, "Mouse", "Absolute pixel location\r\nMouse Left Click item 'FormRun' at 123;123.", repo.FormRun.SelfInfo, new RecordItemIndex(6));
+            repo.FormRun.Self.Click("123;123");
+            Delay.Milliseconds(200);
+            
+            // Percent pixel location < 100%
+            Report.Log(ReportLevel.Info, "Mouse", "Percent pixel location < 100%\r\nMouse Left Click item 'FormRun' at .25;.25.", repo.FormRun.SelfInfo, new RecordItemIndex(7));
+            repo.FormRun.Self.Click(".25;.25");
+            Delay.Milliseconds(200);
+            
+            // Percent pixel location > 100%
+            Report.Log(ReportLevel.Info, "Mouse", "Percent pixel location > 100%\r\nMouse Left Click item 'FormRun' at .23;1.23.", repo.FormRun.SelfInfo, new RecordItemIndex(8));
+            repo.FormRun.Self.Click(".23;1.23");
+            Delay.Milliseconds(200);
+            
         }
 
 #region Image Feature Data
