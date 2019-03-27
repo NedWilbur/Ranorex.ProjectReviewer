@@ -202,6 +202,13 @@ namespace Ranorex.ProjectReviewer
 
                 //TODO: Check if turbomode = True
 
+                string turboEnabled = (recordTable.Element("turbomode").Value);
+                if (turboEnabled.Contains("True"))
+                    Write(moduleName, "TurboMode Enabled",1);
+
+           
+
+
                 //TODO: Check Speed Factor not equal to 1
 
                 //TODO: Check for default values on variables
