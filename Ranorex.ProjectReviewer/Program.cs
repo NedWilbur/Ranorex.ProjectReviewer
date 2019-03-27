@@ -45,13 +45,14 @@ namespace Ranorex.ProjectReviewer
         /// <returns>String array of files found</returns>
         static string[] FindFiles(string extension)
         {
+            //TODO: Error handling of bad file path
             string[] foundFiles = Directory.GetFiles(solutionFilePath, $"*.{extension}", SearchOption.AllDirectories)
                 .Where(file => !file.Contains("bin"))
                 .ToArray();
 
             if (foundFiles.Length <= 0)
             {
-                Write("ERROR", $"No {extension} files found!");
+                Write("ERROR", $"No {extension} files found!", 3);
                 return null;
             }
 

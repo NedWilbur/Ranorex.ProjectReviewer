@@ -1,11 +1,14 @@
 ﻿<Properties>
   <Array name="active">
-    <Element value="ProjectReviewTester.rxtst" />
+    <Element value="TestModule1.rxrec" />
   </Array>
   <Array name="bookmarks" />
   <Array name="files">
     <Element value="ProjectReviewTester.rxtst" />
     <Element value="Recording1.rxrec" />
+    <Element value="TestModule1.rxrec" />
   </Array>
-  <Properties name="projectSavedData" />
+  <Properties name="projectSavedData">
+    <Array name="recentusercodeselections" />
+  </Properties>
 </Properties>
