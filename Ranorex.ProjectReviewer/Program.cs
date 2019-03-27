@@ -200,16 +200,14 @@ namespace Ranorex.ProjectReviewer
                 if (repeatCount != 1)
                     Write(moduleName, $"Repeat count = ({repeatCount}) (generally = 1)", 1);
 
-                //TODO: Check if turbomode = True
-
-                string turboEnabled = (recordTable.Element("turbomode").Value);
-                if (turboEnabled.Contains("True"))
+                //Check if turbomode = True
+                if (recordTable.Element("turbomode").Value.Contains("True"))
                     Write(moduleName, "TurboMode Enabled",1);
 
-           
-
-
-                //TODO: Check Speed Factor not equal to 1
+                //Check Speed Factor not equal to 1
+                float speedFactor = float.Parse(recordTable.Element("speedfactor").Value);
+                if (speedFactor != 1)
+                    Write(moduleName, $"Speed Factor = ({speedFactor}) (generally = 1)", 1);
 
                 //TODO: Check for default values on variables
 

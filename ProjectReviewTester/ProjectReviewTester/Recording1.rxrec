@@ -14,7 +14,7 @@ rxversion="9.0">
 		True
 	</genreport>
 	<speedfactor>
-		1
+		65
 	</speedfactor>
 	<useDefaultItemLogging>
 		True
