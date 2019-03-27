@@ -58,7 +58,7 @@ namespace Ranorex.ProjectReviewer
 
             return foundFiles;
         }
-            
+
 
         /// <summary>
         /// 
@@ -133,7 +133,7 @@ namespace Ranorex.ProjectReviewer
 
                 //Check for empty test containers
                 IEnumerable<XElement> allChildTestCases = testSuite.Descendants("childhierarchy").Descendants("testcase");
-                foreach(XElement testCase in allChildTestCases)
+                foreach (XElement testCase in allChildTestCases)
                 {
                     if (!testCase.Elements().Any())
                         Write($"({testsuiteName}) {testCase.Attribute("name").Value}", "Testcase is empty", 2);
@@ -252,19 +252,49 @@ namespace Ranorex.ProjectReviewer
                     if (action.Name == "separatoritem")
                         Write(moduleName, $"Seperator found - may be split into smaller modules (Text: {Regex.Replace(action.Element("comment").Value, @"\s+", "")})", 2);
 
-                    //Check for non-merged keyboard actions
-
                     //Check for any action comments (output below loop)
                     if (action.Element("comment") != null)
                         commentFound = true;
 
-                    //Check for disabled steps
-
                     //Check for fixed pixel mouse action spot
+                    if (action.Name == "mouseitem")
+                    {
+                        if (action.Attribute("loc").Value.Any(Char.IsDigit))
+                        {
+                            string[] xyLocations = action.Attribute("loc").Value.Split(';');
+                            foreach (string location in xyLocations)
+                            {
+                                //Check if % based
+                                if (location.Contains("."))
+                                {
+                                    if (float.Parse(location) > 1)
+                                    {
+                                        Write(moduleName, "Proportional (%) mouse click action spot > 100%", 3);
+                                        break;
+                                    }
+                                }
+                                //Absolute location
+                                else
+                                {
+                                    Write(moduleName, "Absolute pixel mouse click action spot", 3);
+                                    break;
+                                }
+                            }
+
+                        }
+
+                    }
+
+
+                    //Check for mouse {down}/{up} actions
 
                     //Check for empty modules (no actions)
 
-                    //Using {back} or shitty key presses
+                    //Using {back} or shitty key presses\ keyup keydown
+
+                    //Check for non-merged keyboard actions
+
+
                 }
                 if (!commentFound)
                     Write(moduleName, "No action comments found", 1);
@@ -281,6 +311,6 @@ namespace Ranorex.ProjectReviewer
 
         }
 
- 
+
     }
 }

@@ -26,6 +26,30 @@ rxversion="9.0">
 	<variables>
 	</variables>
 	<recorditems>
+		<mouseitem
+		action="Click"
+		button="Left"
+		duration="500ms"
+		enabled="True"
+		loc="Center"
+		movetime="300ms"
+		optional="False"
+		searchpropertyid="28833667-84ba-4521-a85f-aec5fe26592a"
+		sx="0"
+		sy="0"
+		warnoutofbounds="False">
+			<comment>
+			</comment>
+			<bindings>
+			</bindings>
+			<info
+			id="a38b661d-e88e-4815-b34f-4c78943c358c"
+			sourcename="RepositoryEditor">
+				<path>
+					/form[@title='Run']
+				</path>
+			</info>
+		</mouseitem>
 	</recorditems>
 	<repository
 	id="502ec0b3-c478-4a9f-a7d3-9108fe09c94c"
