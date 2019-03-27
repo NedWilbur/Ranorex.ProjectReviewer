@@ -4,7 +4,6 @@
   <SerializedValue name="ModuleBrowserState">
     <ArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <string>{B572F7A1-5A69-471F-B209-11AE08865101}</string>
-      <string>6e12a760-6636-488c-b3e9-7d256aa61ae5</string>
       <string>60513a05-eab7-41e7-8c10-e51c735edc2e</string>
     </ArrayOfString>
   </SerializedValue>

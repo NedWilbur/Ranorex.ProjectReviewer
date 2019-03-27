@@ -13,6 +13,12 @@ rxversion="9.0">
 			id="3679d187-eafe-48a7-be65-8ee3bf4ac8b7"
 			name="teardown">
 			</teardown>
+			<testmodule
+			id="4b19f2d4-2ef5-4131-b90a-572fb6462c16"
+			name="Recording2"
+			ref="22611417-31fc-4677-95ba-161979154de5"
+			type="Recording">
+			</testmodule>
 			<testcase
 			id="4bb56ae5-1f86-482d-b817-3308b37ddc44"
 			name="DisabledModule">
@@ -25,32 +31,19 @@ rxversion="9.0">
 			name="ProjectReviewTester"
 			reportlevel="Info;20">
 			</testcase>
-			<testmodule
-			enabled="False"
-			id="6a733c44-5989-4fdb-a306-ee83dad66511"
-			name="Recording1"
-			ref="d45f36d5-4442-4793-9296-36bd903a5088"
-			type="Recording">
-			</testmodule>
 			<smartfoldernode
 			id="6f45b343-90cf-4ab7-965c-40144f590f1d"
 			name="SmartFolder">
 			</smartfoldernode>
-			<testmodule
-			enabled="False"
-			id="73f9e746-94c6-45b8-92de-e748874faa75"
-			name="Recording1"
-			ref="d45f36d5-4442-4793-9296-36bd903a5088"
-			type="Recording">
-			</testmodule>
 			<testcase
 			id="762c176e-47cb-45ad-9aca-59f831ab92f2"
 			name="EmptyTestCase">
 			</testcase>
 			<testmodule
-			id="ae9c5b78-cef4-46e9-a8d9-2d2a26b90f1f"
-			name="Recording1"
-			ref="d45f36d5-4442-4793-9296-36bd903a5088"
+			enabled="False"
+			id="86dfcfef-29ec-4e11-9358-f8f39d32c6df"
+			name="Recording3"
+			ref="171fbe4a-809e-4522-92ae-080b7604ef1c"
 			type="Recording">
 			</testmodule>
 			<testsuite
@@ -93,10 +86,6 @@ rxversion="9.0">
 					id="4bb56ae5-1f86-482d-b817-3308b37ddc44"
 					name="DisabledModule">
 						<testmodule
-						id="73f9e746-94c6-45b8-92de-e748874faa75"
-						name="Recording1">
-						</testmodule>
-						<testmodule
 						id="277be96e-6b47-44ee-a392-8205e6ceaa90"
 						name="Recording1">
 						</testmodule>
@@ -104,12 +93,12 @@ rxversion="9.0">
 						id="6f45b343-90cf-4ab7-965c-40144f590f1d"
 						name="SmartFolder">
 							<testmodule
-							id="6a733c44-5989-4fdb-a306-ee83dad66511"
-							name="Recording1">
+							id="4b19f2d4-2ef5-4131-b90a-572fb6462c16"
+							name="Recording2">
 							</testmodule>
 							<testmodule
-							id="ae9c5b78-cef4-46e9-a8d9-2d2a26b90f1f"
-							name="Recording1">
+							id="86dfcfef-29ec-4e11-9358-f8f39d32c6df"
+							name="Recording3">
 							</testmodule>
 						</smartfoldernode>
 					</testcase>

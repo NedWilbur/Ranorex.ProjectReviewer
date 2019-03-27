@@ -4,6 +4,7 @@
   </Array>
   <Array name="bookmarks" />
   <Array name="files">
+    <Element value="Recording1.rxrec" />
     <Element value="ProjectReviewTester.rxtst" />
     <Element value="Recording1.rxrec" />
     <Element value="TestModule1.rxrec" />

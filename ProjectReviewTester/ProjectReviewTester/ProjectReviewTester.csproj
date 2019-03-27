@@ -141,6 +141,30 @@
       <UserCode>true</UserCode>
       <id>eecfbd02-6be1-48f1-8563-20b43873607e</id>
     </Compile>
+    <Compile Include="Recording2.cs">
+      <BoundTo>ad1440ad-d61f-4237-9917-31774b6393f7</BoundTo>
+      <DependentUpon>Recording2.rxrec</DependentUpon>
+      <RecorderCode>true</RecorderCode>
+      <id>2e360be5-6392-42bb-85d0-7d16f298c4ad</id>
+    </Compile>
+    <Compile Include="Recording2.UserCode.cs">
+      <BoundTo>ad1440ad-d61f-4237-9917-31774b6393f7</BoundTo>
+      <DependentUpon>Recording2.rxrec</DependentUpon>
+      <UserCode>true</UserCode>
+      <id>6d7ec385-c55e-4154-b50b-938561a7d780</id>
+    </Compile>
+    <Compile Include="Recording3.cs">
+      <BoundTo>c47bc55c-c778-448e-a025-8e399a460890</BoundTo>
+      <DependentUpon>Recording3.rxrec</DependentUpon>
+      <RecorderCode>true</RecorderCode>
+      <id>b8aa6f9e-abc9-41f1-9b37-5cc9d91e3bae</id>
+    </Compile>
+    <Compile Include="Recording3.UserCode.cs">
+      <BoundTo>c47bc55c-c778-448e-a025-8e399a460890</BoundTo>
+      <DependentUpon>Recording3.rxrec</DependentUpon>
+      <UserCode>true</UserCode>
+      <id>a35cfd11-bb13-4434-835d-2cbd01564ab5</id>
+    </Compile>
     <Compile Include="TestModule1.cs">
       <BoundTo>946c8cab-385f-473c-af48-2e565c13b1aa</BoundTo>
       <DependentUpon>TestModule1.rxrec</DependentUpon>
@@ -181,6 +205,16 @@
       <BoundTo>6ae73c4b-058b-4530-8fd7-58a3f9ceb3d6</BoundTo>
       <id>bda711d3-6092-41be-a7ad-9c375ef6b919</id>
       <recordtableid>d45f36d5-4442-4793-9296-36bd903a5088</recordtableid>
+    </None>
+    <None Include="Recording2.rxrec">
+      <BoundTo>6ae73c4b-058b-4530-8fd7-58a3f9ceb3d6</BoundTo>
+      <id>ad1440ad-d61f-4237-9917-31774b6393f7</id>
+      <recordtableid>22611417-31fc-4677-95ba-161979154de5</recordtableid>
+    </None>
+    <None Include="Recording3.rxrec">
+      <BoundTo>6ae73c4b-058b-4530-8fd7-58a3f9ceb3d6</BoundTo>
+      <id>c47bc55c-c778-448e-a025-8e399a460890</id>
+      <recordtableid>171fbe4a-809e-4522-92ae-080b7604ef1c</recordtableid>
     </None>
     <None Include="TestModule1.rxrec">
       <BoundTo>6ae73c4b-058b-4530-8fd7-58a3f9ceb3d6</BoundTo>

@@ -27,7 +27,7 @@ namespace ProjectReviewTester
     public partial class ProjectReviewTesterRepository : RepoGenBaseFolder
     {
         static ProjectReviewTesterRepository instance = new ProjectReviewTesterRepository();
-        ProjectReviewTesterRepositoryFolders.FormRunAppFolder _formrun;
+        ProjectReviewTesterRepositoryFolders.ExplorerAppFolder _explorer;
 
         /// <summary>
         /// Gets the singleton class instance representing the ProjectReviewTesterRepository element repository.
@@ -44,7 +44,7 @@ namespace ProjectReviewTester
         public ProjectReviewTesterRepository() 
             : base("ProjectReviewTesterRepository", "/", null, 0, false, "d1f376e7-b334-4b42-b75b-58eca915fdc9", ".\\RepositoryImages\\ProjectReviewTesterRepositoryd1f376e7.rximgres")
         {
-            _formrun = new ProjectReviewTesterRepositoryFolders.FormRunAppFolder(this);
+            _explorer = new ProjectReviewTesterRepositoryFolders.ExplorerAppFolder(this);
         }
 
 #region Variables
@@ -64,12 +64,12 @@ namespace ProjectReviewTester
         }
 
         /// <summary>
-        /// The FormRun folder.
+        /// The Explorer folder.
         /// </summary>
-        [RepositoryFolder("a38b661d-e88e-4815-b34f-4c78943c358c")]
-        public virtual ProjectReviewTesterRepositoryFolders.FormRunAppFolder FormRun
+        [RepositoryFolder("1910e180-f162-486e-9436-358600c065d7")]
+        public virtual ProjectReviewTesterRepositoryFolders.ExplorerAppFolder Explorer
         {
-            get { return _formrun; }
+            get { return _explorer; }
         }
     }
 
@@ -80,40 +80,38 @@ namespace ProjectReviewTester
     public partial class ProjectReviewTesterRepositoryFolders
     {
         /// <summary>
-        /// The FormRunAppFolder folder.
+        /// The ExplorerAppFolder folder.
         /// </summary>
-        [RepositoryFolder("a38b661d-e88e-4815-b34f-4c78943c358c")]
-        public partial class FormRunAppFolder : RepoGenBaseFolder
+        [RepositoryFolder("1910e180-f162-486e-9436-358600c065d7")]
+        public partial class ExplorerAppFolder : RepoGenBaseFolder
         {
-            RepoItemInfo _buttonokInfo;
-            RepoItemInfo _text1001Info;
+            RepoItemInfo _startInfo;
 
             /// <summary>
-            /// Creates a new FormRun  folder.
+            /// Creates a new Explorer  folder.
             /// </summary>
-            public FormRunAppFolder(RepoGenBaseFolder parentFolder) :
-                    base("FormRun", "/form[@title='Run']", parentFolder, 30000, null, true, "a38b661d-e88e-4815-b34f-4c78943c358c", "")
+            public ExplorerAppFolder(RepoGenBaseFolder parentFolder) :
+                    base("Explorer", "/menubar[@class='Shell_TrayWnd']", parentFolder, 30000, null, true, "1910e180-f162-486e-9436-358600c065d7", "")
             {
-                _buttonokInfo = new RepoItemInfo(this, "ButtonOK", "button[@text='OK']", 30000, null, "c1ff9891-fdbc-4c63-b962-131f0add012c");
-                _text1001Info = new RepoItemInfo(this, "Text1001", "?/?/text[@controlid='1001']", 30000, null, "0e6d114b-87cc-4f3b-88ac-aa7621068ab8");
+                _startInfo = new RepoItemInfo(this, "Start", "?/?/button[@accessiblename='Start']", 30000, null, "69f6c061-8d6b-4ff1-8c6c-74207faaa372");
             }
 
             /// <summary>
             /// The Self item.
             /// </summary>
-            [RepositoryItem("a38b661d-e88e-4815-b34f-4c78943c358c")]
-            public virtual Ranorex.Form Self
+            [RepositoryItem("1910e180-f162-486e-9436-358600c065d7")]
+            public virtual Ranorex.MenuBar Self
             {
                 get
                 {
-                    return _selfInfo.CreateAdapter<Ranorex.Form>(true);
+                    return _selfInfo.CreateAdapter<Ranorex.MenuBar>(true);
                 }
             }
 
             /// <summary>
             /// The Self item info.
             /// </summary>
-            [RepositoryItemInfo("a38b661d-e88e-4815-b34f-4c78943c358c")]
+            [RepositoryItemInfo("1910e180-f162-486e-9436-358600c065d7")]
             public virtual RepoItemInfo SelfInfo
             {
                 get
@@ -123,50 +121,26 @@ namespace ProjectReviewTester
             }
 
             /// <summary>
-            /// The ButtonOK item.
+            /// The Start item.
             /// </summary>
-            [RepositoryItem("c1ff9891-fdbc-4c63-b962-131f0add012c")]
-            public virtual Ranorex.Button ButtonOK
+            [RepositoryItem("69f6c061-8d6b-4ff1-8c6c-74207faaa372")]
+            public virtual Ranorex.Button Start
             {
                 get
                 {
-                    return _buttonokInfo.CreateAdapter<Ranorex.Button>(true);
+                    return _startInfo.CreateAdapter<Ranorex.Button>(true);
                 }
             }
 
             /// <summary>
-            /// The ButtonOK item info.
+            /// The Start item info.
             /// </summary>
-            [RepositoryItemInfo("c1ff9891-fdbc-4c63-b962-131f0add012c")]
-            public virtual RepoItemInfo ButtonOKInfo
+            [RepositoryItemInfo("69f6c061-8d6b-4ff1-8c6c-74207faaa372")]
+            public virtual RepoItemInfo StartInfo
             {
                 get
                 {
-                    return _buttonokInfo;
-                }
-            }
-
-            /// <summary>
-            /// The Text1001 item.
-            /// </summary>
-            [RepositoryItem("0e6d114b-87cc-4f3b-88ac-aa7621068ab8")]
-            public virtual Ranorex.Text Text1001
-            {
-                get
-                {
-                    return _text1001Info.CreateAdapter<Ranorex.Text>(true);
-                }
-            }
-
-            /// <summary>
-            /// The Text1001 item info.
-            /// </summary>
-            [RepositoryItemInfo("0e6d114b-87cc-4f3b-88ac-aa7621068ab8")]
-            public virtual RepoItemInfo Text1001Info
-            {
-                get
-                {
-                    return _text1001Info;
+                    return _startInfo;
                 }
             }
         }
