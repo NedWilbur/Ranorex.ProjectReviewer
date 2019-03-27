@@ -210,12 +210,19 @@ namespace Ranorex.ProjectReviewer
 
                 //Loop all actions (aka 'recorditems')
                 IEnumerable<XElement> allActions = recordTable.Element("recorditems").Elements();
+                bool commentFound = false;
 
                 //Check if Action count > 15
                 if (allActions.Count() > 15)
                     Write(moduleName, $"More than 15 actions ({allActions.Count()})", 2);
 
-                bool commentFound = false;
+                //Check for empty modules (no actions)
+                if (allActions.Count() <= 0)
+                {
+                    Write(moduleName, $"Empty module with no actions", 2);
+                    commentFound = true; //No need to warn on comments if 0 actions found
+                }
+                
                 foreach (XElement action in allActions)
                 {
                     //TODO: Write the culprit action number
@@ -256,9 +263,10 @@ namespace Ranorex.ProjectReviewer
                     if (action.Element("comment") != null)
                         commentFound = true;
 
-                    //Check for fixed pixel mouse action spot
+                    //Various mouse action checks
                     if (action.Name == "mouseitem")
                     {
+                        //Check for fixed pixel mouse action spot
                         if (action.Attribute("loc").Value.Any(Char.IsDigit))
                         {
                             string[] xyLocations = action.Attribute("loc").Value.Split(';');
@@ -280,15 +288,15 @@ namespace Ranorex.ProjectReviewer
                                     break;
                                 }
                             }
-
                         }
 
+                        //Check for mouse {down}/{up} actions
                     }
 
 
-                    //Check for mouse {down}/{up} actions
 
-                    //Check for empty modules (no actions)
+
+
 
                     //Using {back} or shitty key presses\ keyup keydown
 
