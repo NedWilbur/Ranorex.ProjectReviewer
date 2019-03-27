@@ -227,7 +227,20 @@ namespace Ranorex.ProjectReviewer
                     if (action.Attribute("enabled").Value == "False")
                         Write(moduleName, $"Disabled '{action.Name}' action found", 1);
 
-                    //TODO: Check for repo item bindings (only if required)
+                    //Check for repo item bindings (only on recommended actions)
+                    if (action.Name == "mouseitem" ||
+                        action.Name == "keyitem" ||
+                        action.Name == "keysequenceitem" ||
+                        action.Name == "touchrecorditem" ||
+                        action.Name == "swiperecorditem" ||
+                        action.Name == "validationitem" ||
+                        action.Name == "invokeactionrecorditem" ||
+                        action.Name == "getvaluerecorditem" ||
+                        action.Name == "setvaluerecorditem" ||
+                        action.Name == "WaitForRecordItem" ||
+                        action.Name == "closeapprecorditem")
+                        if (action.Element("info") == null)
+                            Write(moduleName, $"{action.Name} missing a repository item", 3);
 
                     //Report line with no message
                     if (action.Name == "loggingrecorditem")

@@ -95,11 +95,6 @@ namespace ProjectReviewTester
             // Message Log with message
             Report.Log(ReportLevel.Info, "User", "Test123", new RecordItemIndex(4));
             
-            // No Repo Item
-            Report.Log(ReportLevel.Info, "Mouse", "No Repo Item\r\nMouse Left Click item 'FormRun.Text1001' at Center.", repo.FormRun.Text1001Info, new RecordItemIndex(5));
-            repo.FormRun.Text1001.Click();
-            Delay.Milliseconds(200);
-            
         }
 
 #region Image Feature Data

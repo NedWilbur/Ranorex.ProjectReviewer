@@ -120,6 +120,12 @@
     <Compile Include="AssemblyInfo.cs">
       <id>82f92612-9daf-423c-8047-41dc4d51cedb</id>
     </Compile>
+    <Compile Include="MissingRepoItems.UserCode.cs">
+      <BoundTo>ae4b7c1a-2958-40ab-a2eb-74e682c382f9</BoundTo>
+      <DependentUpon>MissingRepoItems.rxrec</DependentUpon>
+      <UserCode>true</UserCode>
+      <id>0590b508-3322-4125-a45d-dfd7385165cb</id>
+    </Compile>
     <Compile Include="Program.cs">
       <id>8f6bf455-091c-4449-ab11-e264936fadab</id>
     </Compile>
@@ -190,6 +196,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <id>f87afd8c-97dc-42d0-80de-d1a6ba2c1f9f</id>
     </Content>
+    <None Include="MissingRepoItems.rxrec">
+      <BoundTo>6ae73c4b-058b-4530-8fd7-58a3f9ceb3d6</BoundTo>
+      <id>ae4b7c1a-2958-40ab-a2eb-74e682c382f9</id>
+      <recordtableid>e7eeab4e-b65f-40ff-bec8-75f5818d0b38</recordtableid>
+    </None>
     <None Include="ProjectReviewTesterRepository.rximg">
       <BoundTo>6ae73c4b-058b-4530-8fd7-58a3f9ceb3d6</BoundTo>
       <DependentUpon>ProjectReviewTesterRepository.rxrep</DependentUpon>
