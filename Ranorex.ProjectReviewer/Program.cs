@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -268,7 +268,7 @@ namespace Ranorex.ProjectReviewer
                     if (action.Element("comment") != null)
                         commentFound = true;
 
-                    //Various mouse action checks
+                    //Mouse Action Checks
                     if (action.Name == "mouseitem")
                     {
                         //Check for mouse {down}/{up} actions
@@ -303,9 +303,15 @@ namespace Ranorex.ProjectReviewer
                         }
                     }
 
-                    //Using {back} or shitty key presses\ keyup keydown
+                    //Keysequence Action Checks
+                    if (action.Name == "keysequenceitem")
+                    {
+                        //Check for {} in keysequence, could mean up/down keypress or some other bad practice
+                        if (action.Attribute("KeySequence").Value.Contains('{'))
+                            Write(moduleName, "{} found in keysequence found (possible issue)", 2);
 
                     //Check for non-merged keyboard actions
+                    }
 
                 }
                 if (!commentFound)

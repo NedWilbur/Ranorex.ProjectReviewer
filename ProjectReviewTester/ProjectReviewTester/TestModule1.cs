@@ -127,6 +127,16 @@ namespace ProjectReviewTester
             Mouse.ButtonDown(System.Windows.Forms.MouseButtons.Left);
             Delay.Milliseconds(200);
             
+            // Down/Up in key squence
+            Report.Log(ReportLevel.Info, "Keyboard", "Down/Up in key squence\r\nKey sequence '{a down}{a up}' with focus on 'FormRun.Text1001'.", repo.FormRun.Text1001Info, new RecordItemIndex(11));
+            repo.FormRun.Text1001.PressKeys("{a down}{a up}");
+            Delay.Milliseconds(0);
+            
+            // Non-merged keyboard action
+            Report.Log(ReportLevel.Info, "Keyboard", "Non-merged keyboard action\r\nKey sequence '123' with focus on 'FormRun.Text1001'.", repo.FormRun.Text1001Info, new RecordItemIndex(12));
+            repo.FormRun.Text1001.PressKeys("123");
+            Delay.Milliseconds(0);
+            
         }
 
 #region Image Feature Data

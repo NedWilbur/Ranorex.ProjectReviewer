@@ -234,6 +234,46 @@ rxversion="9.0">
 				</path>
 			</info>
 		</mouseitem>
+		<keysequenceitem
+		KeySequence="{a down}{a up}"
+		duration="100ms"
+		enabled="True"
+		optional="False"
+		presstime="100ms"
+		searchpropertyid="e9826f34-7e86-4967-8e7a-92d079bb37a1">
+			<comment>
+				Down/Up in key squence
+			</comment>
+			<bindings>
+			</bindings>
+			<info
+			id="0e6d114b-87cc-4f3b-88ac-aa7621068ab8"
+			sourcename="RepositoryEditor">
+				<path>
+					/form[@title='Run']/?/?/text[@controlid='1001']
+				</path>
+			</info>
+		</keysequenceitem>
+		<keysequenceitem
+		KeySequence="123"
+		duration="100ms"
+		enabled="True"
+		optional="False"
+		presstime="100ms"
+		searchpropertyid="e9826f34-7e86-4967-8e7a-92d079bb37a1">
+			<comment>
+				Non-merged keyboard action
+			</comment>
+			<bindings>
+			</bindings>
+			<info
+			id="0e6d114b-87cc-4f3b-88ac-aa7621068ab8"
+			sourcename="RepositoryEditor">
+				<path>
+					/form[@title='Run']/?/?/text[@controlid='1001']
+				</path>
+			</info>
+		</keysequenceitem>
 	</recorditems>
 	<repository
 	id="502ec0b3-c478-4a9f-a7d3-9108fe09c94c"
