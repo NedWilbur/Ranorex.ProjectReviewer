@@ -202,7 +202,7 @@ namespace Ranorex.ProjectReviewer
 
                 //Check if turbomode = True
                 if (recordTable.Element("turbomode").Value.Contains("True"))
-                    Write(moduleName, "TurboMode Enabled",1);
+                    Write(moduleName, "TurboMode Enabled", 1);
 
                 //Check Speed Factor not equal to 1
                 float speedFactor = float.Parse(recordTable.Element("speedfactor").Value);
@@ -228,17 +228,17 @@ namespace Ranorex.ProjectReviewer
                     commentFound = true; //No need to warn on comments if 0 actions found
                 }
 
+                //Loop all actions
+                int actionNumber = 1;//Used for logging
                 foreach (XElement action in allActions)
                 {
-                    //TODO: Write the culprit action number for each issue below
-
                     //Check for static delays
                     if (action.Name == "explicitdelayitem")
-                        Write(moduleName, $"Static delay found ({action.Attribute("duration").Value})", 3);
+                        Write(moduleName + $" [#{actionNumber}]", $"Static delay found ({action.Attribute("duration").Value})", 3);
 
                     //Check for disabled actions
                     if (action.Attribute("enabled").Value == "False")
-                        Write(moduleName, $"Disabled '{action.Name}' action found", 1);
+                        Write(moduleName + $" [#{actionNumber}]", $"Disabled '{action.Name}' action found", 1);
 
                     //Check for repo item bindings (only on recommended actions)
                     if (action.Name == "mouseitem" ||
@@ -253,16 +253,16 @@ namespace Ranorex.ProjectReviewer
                         action.Name == "WaitForRecordItem" ||
                         action.Name == "closeapprecorditem")
                         if (action.Element("info") == null)
-                            Write(moduleName, $"{action.Name} missing a repository item", 3);
+                            Write(moduleName + $" [#{actionNumber}]", $"{action.Name} missing a repository item", 3);
 
                     //Check for report line without a message
                     if (action.Name == "loggingrecorditem")
                         if (string.IsNullOrEmpty(action.Attribute("message").Value))
-                            Write(moduleName, "Empty 'Log Message' action found", 1);
+                            Write(moduleName + $" [#{actionNumber}]", "Empty 'Log Message' action found", 1);
 
                     //Check for seperators (indicating for possible module split)
                     if (action.Name == "separatoritem")
-                        Write(moduleName, $"Seperator found - may be split into smaller modules (Text: {Regex.Replace(action.Element("comment").Value, @"\s+", "")})", 2);
+                        Write(moduleName + $" [#{actionNumber}]", $"Seperator found - may be split into smaller modules (Text: {Regex.Replace(action.Element("comment").Value, @"\s+", "")})", 2);
 
                     //Check for any action comments (output below loop)
                     if (action.Element("comment") != null)
@@ -273,10 +273,10 @@ namespace Ranorex.ProjectReviewer
                     {
                         //Check for mouse {down}/{up} actions
                         if (action.Attribute("action").Value == "Up")
-                            Write(moduleName, "Mouse-Up action found", 3);
+                            Write(moduleName + $" [#{actionNumber}]", "Mouse-Up action found", 3);
 
                         if (action.Attribute("action").Value == "Down")
-                            Write(moduleName, "Mouse-Down action found", 3);
+                            Write(moduleName + $" [#{actionNumber}]", "Mouse-Down action found", 3);
 
                         //Check for fixed pixel mouse action spot
                         if (action.Attribute("loc").Value.Any(Char.IsDigit))
@@ -289,14 +289,14 @@ namespace Ranorex.ProjectReviewer
                                 {
                                     if (float.Parse(location) > 1)
                                     {
-                                        Write(moduleName, "Proportional (%) mouse click action spot > 100%", 3);
+                                        Write(moduleName + $" [#{actionNumber}]", "Proportional (%) mouse click action spot > 100%", 3);
                                         break;
                                     }
                                 }
                                 //Absolute location
                                 else
                                 {
-                                    Write(moduleName, "Absolute pixel mouse click action spot", 3);
+                                    Write(moduleName + $" [#{actionNumber}]", "Absolute pixel mouse click action spot", 3);
                                     break;
                                 }
                             }
@@ -308,18 +308,19 @@ namespace Ranorex.ProjectReviewer
                     {
                         //Check for {} in keysequence, could mean up/down keypress or some other bad practice
                         if (action.Attribute("KeySequence").Value.Contains('{'))
-                            Write(moduleName, "{} found in keysequence found (possible issue)", 2);
+                            Write(moduleName + $" [#{actionNumber}]", "{} found in keysequence found (possible issue)", 2);
 
                         //Check for non-merged keyboard actions
                         XElement nextAction = action.ElementsAfterSelf().FirstOrDefault();
                         if (nextAction != null)
                             if (nextAction.Name == "keysequenceitem")
-                                Write(moduleName, "Non-merged keyboard action found", 2);
+                                Write(moduleName + $" [#{actionNumber}]", "Non-merged keyboard action found", 2);
                     }
 
-
-
+                    //Used for logging
+                    actionNumber++;
                 }
+
                 if (!commentFound)
                     Write(moduleName, "No action comments found", 1);
             }
