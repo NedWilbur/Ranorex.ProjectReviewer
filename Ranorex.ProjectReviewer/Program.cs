@@ -30,6 +30,7 @@ namespace Ranorex.ProjectReviewer
             //Inspect Files
             InspectTestSuites();
             InspectRecordingModulesXML();
+            InspectReposities();
 
 
             //Finished
@@ -183,7 +184,10 @@ namespace Ranorex.ProjectReviewer
 
             //Check if no modules found
             if (recordingModules == null)
+            {
+                Write("Modules", $"No recording modules found", 3);
                 return;
+            }
 
             //Loop all modules
             foreach (string recordingModuleFilePath in recordingModules)
@@ -322,6 +326,36 @@ namespace Ranorex.ProjectReviewer
 
                 if (!commentFound)
                     Write(moduleName, "No action comments found", 1);
+            }
+        }
+
+        static void InspectReposities()
+        {
+            //Set catagory for output file
+            writeCatagory = "Repo";
+
+            //Get all recording modules files
+            string[] repositories = FindFiles("rxrep");
+
+            //Check if no modules found
+            if (repositories == null)
+            {
+                Write("Repo", $"No repositories found", 3);
+                return;
+            }
+
+            //Loop all repos
+            foreach (string repositoryFilePath in repositories)
+            {
+                //Create XDocument/XElement
+                XDocument repo = XDocument.Load(repositoryFilePath);
+
+                //Check Search timeout
+                //Check if any items with same rxpath
+                //Check for long names
+                //Check for 2+ elements with matching root RxPath
+                //Check for unused variables
+                //Check for variables with no default value
             }
         }
     }
