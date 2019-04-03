@@ -227,10 +227,10 @@ namespace Ranorex.ProjectReviewer
                     Write(moduleName, $"Empty module with no actions", 2);
                     commentFound = true; //No need to warn on comments if 0 actions found
                 }
-                
+
                 foreach (XElement action in allActions)
                 {
-                    //TODO: Write the culprit action number
+                    //TODO: Write the culprit action number for each issue below
 
                     //Check for static delays
                     if (action.Name == "explicitdelayitem")
@@ -271,6 +271,13 @@ namespace Ranorex.ProjectReviewer
                     //Various mouse action checks
                     if (action.Name == "mouseitem")
                     {
+                        //Check for mouse {down}/{up} actions
+                        if (action.Attribute("action").Value == "Up")
+                            Write(moduleName, "Mouse-Up action found", 3);
+
+                        if (action.Attribute("action").Value == "Down")
+                            Write(moduleName, "Mouse-Down action found", 3);
+
                         //Check for fixed pixel mouse action spot
                         if (action.Attribute("loc").Value.Any(Char.IsDigit))
                         {
@@ -294,19 +301,11 @@ namespace Ranorex.ProjectReviewer
                                 }
                             }
                         }
-
-                        //Check for mouse {down}/{up} actions
                     }
-
-
-
-
-
 
                     //Using {back} or shitty key presses\ keyup keydown
 
                     //Check for non-merged keyboard actions
-
 
                 }
                 if (!commentFound)

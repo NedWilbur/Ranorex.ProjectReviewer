@@ -115,6 +115,18 @@ namespace ProjectReviewTester
             repo.FormRun.Self.Click(".23;1.23");
             Delay.Milliseconds(200);
             
+            // Mouse Up
+            Report.Log(ReportLevel.Info, "Mouse", "Mouse Up\r\nMouse Left Up item 'FormRun' at .23;1.23.", repo.FormRun.SelfInfo, new RecordItemIndex(9));
+            repo.FormRun.Self.MoveTo(".23;1.23");
+            Mouse.ButtonUp(System.Windows.Forms.MouseButtons.Left);
+            Delay.Milliseconds(200);
+            
+            // Mouse Down
+            Report.Log(ReportLevel.Info, "Mouse", "Mouse Down\r\nMouse Left Down item 'FormRun' at .23;1.23.", repo.FormRun.SelfInfo, new RecordItemIndex(10));
+            repo.FormRun.Self.MoveTo(".23;1.23");
+            Mouse.ButtonDown(System.Windows.Forms.MouseButtons.Left);
+            Delay.Milliseconds(200);
+            
         }
 
 #region Image Feature Data

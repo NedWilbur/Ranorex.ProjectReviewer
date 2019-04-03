@@ -79,6 +79,10 @@ namespace ProjectReviewTester
 
             Init();
 
+            Report.Log(ReportLevel.Info, "Mouse", "Mouse Left Click item 'FormRun' at Center.", repo.FormRun.SelfInfo, new RecordItemIndex(0));
+            repo.FormRun.Self.Click();
+            Delay.Milliseconds(200);
+            
         }
 
 #region Image Feature Data

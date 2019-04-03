@@ -184,6 +184,56 @@ rxversion="9.0">
 				</path>
 			</info>
 		</mouseitem>
+		<mouseitem
+		action="Up"
+		button="Left"
+		duration="500ms"
+		enabled="True"
+		loc=".23;1.23"
+		movetime="300ms"
+		optional="False"
+		searchpropertyid="64a767f5-5948-49a1-811a-fad59801501f"
+		sx="0"
+		sy="0"
+		warnoutofbounds="False">
+			<comment>
+				Mouse Up
+			</comment>
+			<bindings>
+			</bindings>
+			<info
+			id="a38b661d-e88e-4815-b34f-4c78943c358c"
+			sourcename="RepositoryEditor">
+				<path>
+					/form[@title='Run']
+				</path>
+			</info>
+		</mouseitem>
+		<mouseitem
+		action="Down"
+		button="Left"
+		duration="500ms"
+		enabled="True"
+		loc=".23;1.23"
+		movetime="300ms"
+		optional="False"
+		searchpropertyid="64a767f5-5948-49a1-811a-fad59801501f"
+		sx="0"
+		sy="0"
+		warnoutofbounds="False">
+			<comment>
+				Mouse Down
+			</comment>
+			<bindings>
+			</bindings>
+			<info
+			id="a38b661d-e88e-4815-b34f-4c78943c358c"
+			sourcename="RepositoryEditor">
+				<path>
+					/form[@title='Run']
+				</path>
+			</info>
+		</mouseitem>
 	</recorditems>
 	<repository
 	id="502ec0b3-c478-4a9f-a7d3-9108fe09c94c"
