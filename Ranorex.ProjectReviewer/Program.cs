@@ -30,8 +30,7 @@ namespace Ranorex.ProjectReviewer
             //Inspect Files
             InspectTestSuites();
             InspectRecordingModulesXML();
-            InspectRecordingModulesCS();
-            InspectRecordingModulesUsercodeCS();
+
 
             //Finished
             Console.WriteLine("\nFinished, press any key to exit.");
@@ -211,7 +210,7 @@ namespace Ranorex.ProjectReviewer
 
                 //TODO: Check for default values on variables
 
-                //TODO:Check for unused variable
+                //TODO: Check for unused variable
 
                 //Loop all actions (aka 'recorditems')
                 IEnumerable<XElement> allActions = recordTable.Element("recorditems").Elements();
@@ -325,17 +324,5 @@ namespace Ranorex.ProjectReviewer
                     Write(moduleName, "No action comments found", 1);
             }
         }
-
-        static void InspectRecordingModulesCS()
-        {
-
-        }
-
-        static void InspectRecordingModulesUsercodeCS()
-        {
-
-        }
-
-
     }
 }
