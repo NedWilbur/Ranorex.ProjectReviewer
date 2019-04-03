@@ -13,9 +13,14 @@ namespace Ranorex.ProjectReviewer
     {
         static string solutionFilePath;
         static string writeCatagory;
+        static string csvFilePath = "project_analysis.csv";
 
         static void Main(string[] args)
         {
+            //Delete existing csv file
+            if (File.Exists(csvFilePath))
+                File.Delete(csvFilePath);
+
             //Get Solution File Path
             Console.Write("Compress Solution File Path: ");
             solutionFilePath = Console.ReadLine();
@@ -34,7 +39,7 @@ namespace Ranorex.ProjectReviewer
 
 
             //Finished
-            Console.WriteLine("\nFinished, press any key to exit.");
+            Console.WriteLine($"\nFinished, project analysis here: {csvFilePath} \n\n(press any key to exit)");
             Console.ReadKey();
         }
 
@@ -91,7 +96,9 @@ namespace Ranorex.ProjectReviewer
                     $"{message,5}");
             Console.ResetColor();
 
-            //TODO: Write to CSV file
+            //Write to CSV file
+            using (StreamWriter writer = new StreamWriter(new FileStream(csvFilePath, FileMode.Append, FileAccess.Write)))
+                writer.WriteLine($"{severity},{writeCatagory},{itemName},{message},");
         }
 
         static void InspectTestSuites()
