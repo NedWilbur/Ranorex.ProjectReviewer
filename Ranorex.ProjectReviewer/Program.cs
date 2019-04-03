@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -310,8 +310,14 @@ namespace Ranorex.ProjectReviewer
                         if (action.Attribute("KeySequence").Value.Contains('{'))
                             Write(moduleName, "{} found in keysequence found (possible issue)", 2);
 
-                    //Check for non-merged keyboard actions
+                        //Check for non-merged keyboard actions
+                        XElement nextAction = action.ElementsAfterSelf().FirstOrDefault();
+                        if (nextAction != null)
+                            if (nextAction.Name == "keysequenceitem")
+                                Write(moduleName, "Non-merged keyboard action found", 2);
                     }
+
+
 
                 }
                 if (!commentFound)
