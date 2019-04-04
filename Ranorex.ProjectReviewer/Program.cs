@@ -106,7 +106,7 @@ namespace Ranorex.ProjectReviewer
         static void InspectTestSuites()
         {
             //Set catagory for output file
-            writeCatagory = "Test Suite";
+            writeCatagory = "TestSuite";
 
             //Get all TS files
             string[] testSuites = FindFiles("rxtst");
@@ -363,28 +363,41 @@ namespace Ranorex.ProjectReviewer
                 string RepoName = "TODO";
 
                 //Loop All Variables
-                IList<XElement> variables;
+                List<string> variables = new List<string>();
                 foreach (XElement var in repo.Descendants("var"))
                 {
+                    //Get variable name
+                    string varName = var.Attribute("name").Value;
+
                     //Check for variables with no default value
                     if (string.IsNullOrEmpty(var.Value))
-                        Write($"{RepoName} - {var.Value}", $"No default value for variable", 2);
+                        Write($"{RepoName} - {varName}", $"No default value for variable", 2);
 
-                    //Check for unused variables
+                    //Check for unused variables (start)
+                    variables.Add(varName);
                 }
 
                 //Loop all items
                 foreach (XElement item in repo.Descendants("item"))
                 {
-
-
-
                     //Check Search timeout
                     int searchtimeout = int.Parse(item.Attribute("searchtimeout").Value.Replace("ms", ""));
                     if (searchtimeout > 30000)
                         Write($"{RepoName} - {item.Attribute("name").Value}", $"Searchtime out > 30s", 1);
                     if (searchtimeout < 30000)
                         Write($"{RepoName} - {item.Attribute("name").Value}", $"Searchtime out < 30s", 2);
+
+                    //Check for unused variables (check)
+                    string RxPath = CleanWhiteSpace(item.Value);
+                    if (RxPath.Contains("$"))
+                    {
+                        for (int i = variables.Count - 1; i >= 0; i--)
+                        {
+                            if (RxPath.Contains("$" + variables[i]))
+                                variables.Remove(variables[i]);
+                        }
+                    }
+ 
 
 
                     //Check if any items with same rxpath
@@ -394,12 +407,12 @@ namespace Ranorex.ProjectReviewer
                         Write($"{RepoName} - {item.Name}", $"Item name > 20 characters", 1);
 
                     //Check for 2+ elements with matching root RxPath
-
-
-                    
-
                 }
 
+                //Check for unused variables (report any not found)
+                if (variables.Count > 0)
+                    foreach (string var in variables)
+                        Write($"{RepoName}", $"Unused variable: {var}", 2);
             }
         }
     }
