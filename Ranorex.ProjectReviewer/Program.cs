@@ -366,16 +366,25 @@ namespace Ranorex.ProjectReviewer
                     //Check Search timeout
                     int searchtimeout = int.Parse(item.Attribute("searchtimeout").Value.Replace("ms", ""));
                     if (searchtimeout > 30000)
-                        Write($"{RepoName} - {item.Name}", $"Searchtime out > 30s", 1);
+                        Write($"{RepoName} - {item.Attribute("name").Value}", $"Searchtime out > 30s", 1);
                     if (searchtimeout < 30000)
-                        Write($"{RepoName} - {item.Name}", $"Searchtime out < 30s", 1);
+                        Write($"{RepoName} - {item.Attribute("name").Value}", $"Searchtime out < 30s", 2);
+
+
+                    //Check if any items with same rxpath
+
+                    //Check for long names
+                    if (item.Attribute("name").Value.Length > 20)
+                        Write($"{RepoName} - {item.Name}", $"Item name > 20 characters", 1);
+
+                    //Check for 2+ elements with matching root RxPath
+
+                    //Check for unused variables
+
+                    //Check for variables with no default value
+
                 }
 
-                //Check if any items with same rxpath
-                //Check for long names
-                //Check for 2+ elements with matching root RxPath
-                //Check for unused variables
-                //Check for variables with no default value
             }
         }
     }

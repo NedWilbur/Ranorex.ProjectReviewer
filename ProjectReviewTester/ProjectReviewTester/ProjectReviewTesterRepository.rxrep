@@ -45,6 +45,16 @@ rxversion="9.0">
 			<item
 			addcaps="text,nativewindow"
 			capname="text"
+			id="3a5ed404-da49-42f3-9430-dc04ba142efe"
+			name="LongNameLongNameLongNameLongName"
+			refimgid="3300e419-9382-492d-96e8-ab6664322155"
+			refpath="/form[@title='Run']/combobox[@controlid='12298']/text[@controlid='1001']"
+			searchtimeout="30000ms">
+				/form[@title='Run']/?/?/text[@controlid='1001']
+			</item>
+			<item
+			addcaps="text,nativewindow"
+			capname="text"
 			id="b7c269d8-6b29-4a76-8fc2-faf84f926bfe"
 			name="N45Timeout"
 			refimgid="3300e419-9382-492d-96e8-ab6664322155"

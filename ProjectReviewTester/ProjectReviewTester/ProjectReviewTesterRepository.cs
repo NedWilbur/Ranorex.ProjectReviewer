@@ -87,6 +87,7 @@ namespace ProjectReviewTester
         {
             RepoItemInfo _buttonokInfo;
             RepoItemInfo _text1001Info;
+            RepoItemInfo _longnamelongnamelongnamelongnameInfo;
             RepoItemInfo _n45timeoutInfo;
             RepoItemInfo _n15timeoutInfo;
 
@@ -98,6 +99,7 @@ namespace ProjectReviewTester
             {
                 _buttonokInfo = new RepoItemInfo(this, "ButtonOK", "button[@text='OK']", 30000, null, "c1ff9891-fdbc-4c63-b962-131f0add012c");
                 _text1001Info = new RepoItemInfo(this, "Text1001", "?/?/text[@controlid='1001']", 30000, null, "0e6d114b-87cc-4f3b-88ac-aa7621068ab8");
+                _longnamelongnamelongnamelongnameInfo = new RepoItemInfo(this, "LongNameLongNameLongNameLongName", "?/?/text[@controlid='1001']", 30000, null, "3a5ed404-da49-42f3-9430-dc04ba142efe");
                 _n45timeoutInfo = new RepoItemInfo(this, "N45Timeout", "?/?/text[@controlid='1001']", 45000, null, "b7c269d8-6b29-4a76-8fc2-faf84f926bfe");
                 _n15timeoutInfo = new RepoItemInfo(this, "N15Timeout", "?/?/text[@controlid='1001']", 15000, null, "7e41465a-52d5-40ec-9414-ee38624baeb1");
             }
@@ -171,6 +173,30 @@ namespace ProjectReviewTester
                 get
                 {
                     return _text1001Info;
+                }
+            }
+
+            /// <summary>
+            /// The LongNameLongNameLongNameLongName item.
+            /// </summary>
+            [RepositoryItem("3a5ed404-da49-42f3-9430-dc04ba142efe")]
+            public virtual Ranorex.Text LongNameLongNameLongNameLongName
+            {
+                get
+                {
+                    return _longnamelongnamelongnamelongnameInfo.CreateAdapter<Ranorex.Text>(true);
+                }
+            }
+
+            /// <summary>
+            /// The LongNameLongNameLongNameLongName item info.
+            /// </summary>
+            [RepositoryItemInfo("3a5ed404-da49-42f3-9430-dc04ba142efe")]
+            public virtual RepoItemInfo LongNameLongNameLongNameLongNameInfo
+            {
+                get
+                {
+                    return _longnamelongnamelongnamelongnameInfo;
                 }
             }
 
