@@ -380,6 +380,9 @@ namespace Ranorex.ProjectReviewer
                 //Loop all items
                 foreach (XElement item in repo.Descendants("item"))
                 {
+                    //Get RxPath value
+                    string RxPath = CleanWhiteSpace(item.Value);
+
                     //Check Search timeout
                     int searchtimeout = int.Parse(item.Attribute("searchtimeout").Value.Replace("ms", ""));
                     if (searchtimeout > 30000)
@@ -387,8 +390,7 @@ namespace Ranorex.ProjectReviewer
                     if (searchtimeout < 30000)
                         Write($"{RepoName} - {item.Attribute("name").Value}", $"Searchtime out < 30s", 2);
 
-                    //Check for unused variables (check)
-                    string RxPath = CleanWhiteSpace(item.Value);
+                    //Check for unused variables (remove from list if found)
                     if (RxPath.Contains("$"))
                     {
                         for (int i = variables.Count - 1; i >= 0; i--)
@@ -397,14 +399,12 @@ namespace Ranorex.ProjectReviewer
                                 variables.Remove(variables[i]);
                         }
                     }
- 
-
-
-                    //Check if any items with same rxpath
 
                     //Check for long names
                     if (item.Attribute("name").Value.Length > 20)
                         Write($"{RepoName} - {item.Name}", $"Item name > 20 characters", 1);
+
+                    //Check if any items with same rxpath
 
                     //Check for 2+ elements with matching root RxPath
                 }
