@@ -48,9 +48,8 @@ rxversion="9.0">
 			id="3a5ed404-da49-42f3-9430-dc04ba142efe"
 			name="LongNameLongNameLongNameLongName"
 			refimgid="3300e419-9382-492d-96e8-ab6664322155"
-			refpath="/form[@title='Run']/combobox[@controlid='12298']/text[@controlid='1001']"
 			searchtimeout="30000ms">
-				/form[@title='Run']/?/?/text[@controlid='1001']
+				/form[@title='Run']/?/?/text[@controlid=$NoDefaultValue]
 			</item>
 			<item
 			addcaps="text,nativewindow"
@@ -94,5 +93,14 @@ SUVORK5CYII=
 		</basepath>
 	</rootfolder>
 	<variables>
+		<var
+		id="b4297d22-ea90-4495-8075-5fb09d010267"
+		name="UnusedVariable">
+			123
+		</var>
+		<var
+		id="d4293ca2-d3ff-4b36-95dd-5a26b65adb6f"
+		name="NoDefaultValue">
+		</var>
 	</variables>
 </repository>

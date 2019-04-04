@@ -101,6 +101,8 @@ namespace Ranorex.ProjectReviewer
                 writer.WriteLine($"{severity},{writeCatagory},{itemName},{message},");
         }
 
+        static string CleanWhiteSpace(string value) => Regex.Replace(value, @"\s+", "");
+
         static void InspectTestSuites()
         {
             //Set catagory for output file
@@ -360,9 +362,23 @@ namespace Ranorex.ProjectReviewer
                 //TODO Get Repo Name
                 string RepoName = "TODO";
 
+                //Loop All Variables
+                IList<XElement> variables;
+                foreach (XElement var in repo.Descendants("var"))
+                {
+                    //Check for variables with no default value
+                    if (string.IsNullOrEmpty(var.Value))
+                        Write($"{RepoName} - {var.Value}", $"No default value for variable", 2);
+
+                    //Check for unused variables
+                }
+
                 //Loop all items
                 foreach (XElement item in repo.Descendants("item"))
                 {
+
+
+
                     //Check Search timeout
                     int searchtimeout = int.Parse(item.Attribute("searchtimeout").Value.Replace("ms", ""));
                     if (searchtimeout > 30000)
@@ -379,9 +395,8 @@ namespace Ranorex.ProjectReviewer
 
                     //Check for 2+ elements with matching root RxPath
 
-                    //Check for unused variables
 
-                    //Check for variables with no default value
+                    
 
                 }
 

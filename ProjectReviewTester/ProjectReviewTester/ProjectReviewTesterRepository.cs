@@ -49,6 +49,30 @@ namespace ProjectReviewTester
 
 #region Variables
 
+        string _UnusedVariable = "123";
+
+        /// <summary>
+        /// Gets or sets the value of variable UnusedVariable.
+        /// </summary>
+        [TestVariable("b4297d22-ea90-4495-8075-5fb09d010267")]
+        public string UnusedVariable
+        {
+            get { return _UnusedVariable; }
+            set { _UnusedVariable = value; }
+        }
+
+        string _NoDefaultValue = "";
+
+        /// <summary>
+        /// Gets or sets the value of variable NoDefaultValue.
+        /// </summary>
+        [TestVariable("d4293ca2-d3ff-4b36-95dd-5a26b65adb6f")]
+        public string NoDefaultValue
+        {
+            get { return _NoDefaultValue; }
+            set { _NoDefaultValue = value; }
+        }
+
 #endregion
 
         /// <summary>
@@ -99,7 +123,7 @@ namespace ProjectReviewTester
             {
                 _buttonokInfo = new RepoItemInfo(this, "ButtonOK", "button[@text='OK']", 30000, null, "c1ff9891-fdbc-4c63-b962-131f0add012c");
                 _text1001Info = new RepoItemInfo(this, "Text1001", "?/?/text[@controlid='1001']", 30000, null, "0e6d114b-87cc-4f3b-88ac-aa7621068ab8");
-                _longnamelongnamelongnamelongnameInfo = new RepoItemInfo(this, "LongNameLongNameLongNameLongName", "?/?/text[@controlid='1001']", 30000, null, "3a5ed404-da49-42f3-9430-dc04ba142efe");
+                _longnamelongnamelongnamelongnameInfo = new RepoItemInfo(this, "LongNameLongNameLongNameLongName", "?/?/text[@controlid=$NoDefaultValue]", 30000, null, "3a5ed404-da49-42f3-9430-dc04ba142efe");
                 _n45timeoutInfo = new RepoItemInfo(this, "N45Timeout", "?/?/text[@controlid='1001']", 45000, null, "b7c269d8-6b29-4a76-8fc2-faf84f926bfe");
                 _n15timeoutInfo = new RepoItemInfo(this, "N15Timeout", "?/?/text[@controlid='1001']", 15000, null, "7e41465a-52d5-40ec-9414-ee38624baeb1");
             }
