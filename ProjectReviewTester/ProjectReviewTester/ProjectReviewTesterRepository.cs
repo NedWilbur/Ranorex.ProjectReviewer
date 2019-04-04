@@ -87,6 +87,8 @@ namespace ProjectReviewTester
         {
             RepoItemInfo _buttonokInfo;
             RepoItemInfo _text1001Info;
+            RepoItemInfo _n45timeoutInfo;
+            RepoItemInfo _n15timeoutInfo;
 
             /// <summary>
             /// Creates a new FormRun  folder.
@@ -96,6 +98,8 @@ namespace ProjectReviewTester
             {
                 _buttonokInfo = new RepoItemInfo(this, "ButtonOK", "button[@text='OK']", 30000, null, "c1ff9891-fdbc-4c63-b962-131f0add012c");
                 _text1001Info = new RepoItemInfo(this, "Text1001", "?/?/text[@controlid='1001']", 30000, null, "0e6d114b-87cc-4f3b-88ac-aa7621068ab8");
+                _n45timeoutInfo = new RepoItemInfo(this, "N45Timeout", "?/?/text[@controlid='1001']", 45000, null, "b7c269d8-6b29-4a76-8fc2-faf84f926bfe");
+                _n15timeoutInfo = new RepoItemInfo(this, "N15Timeout", "?/?/text[@controlid='1001']", 15000, null, "7e41465a-52d5-40ec-9414-ee38624baeb1");
             }
 
             /// <summary>
@@ -167,6 +171,54 @@ namespace ProjectReviewTester
                 get
                 {
                     return _text1001Info;
+                }
+            }
+
+            /// <summary>
+            /// The N45Timeout item.
+            /// </summary>
+            [RepositoryItem("b7c269d8-6b29-4a76-8fc2-faf84f926bfe")]
+            public virtual Ranorex.Text N45Timeout
+            {
+                get
+                {
+                    return _n45timeoutInfo.CreateAdapter<Ranorex.Text>(true);
+                }
+            }
+
+            /// <summary>
+            /// The N45Timeout item info.
+            /// </summary>
+            [RepositoryItemInfo("b7c269d8-6b29-4a76-8fc2-faf84f926bfe")]
+            public virtual RepoItemInfo N45TimeoutInfo
+            {
+                get
+                {
+                    return _n45timeoutInfo;
+                }
+            }
+
+            /// <summary>
+            /// The N15Timeout item.
+            /// </summary>
+            [RepositoryItem("7e41465a-52d5-40ec-9414-ee38624baeb1")]
+            public virtual Ranorex.Text N15Timeout
+            {
+                get
+                {
+                    return _n15timeoutInfo.CreateAdapter<Ranorex.Text>(true);
+                }
+            }
+
+            /// <summary>
+            /// The N15Timeout item info.
+            /// </summary>
+            [RepositoryItemInfo("7e41465a-52d5-40ec-9414-ee38624baeb1")]
+            public virtual RepoItemInfo N15TimeoutInfo
+            {
+                get
+                {
+                    return _n15timeoutInfo;
                 }
             }
         }

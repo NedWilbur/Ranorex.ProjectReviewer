@@ -1,10 +1,12 @@
 ﻿<Properties>
   <Array name="active">
-    <Element value="TestModule1.rxrec" />
+    <Element value="ProjectReviewTesterRepository.rxrep" />
   </Array>
   <Array name="bookmarks" />
   <Array name="files">
     <Element value="TestModule1.rxrec" />
+    <Element value="MissingRepoItems.rxrec" />
+    <Element value="ProjectReviewTesterRepository.rxrep" />
   </Array>
   <Properties name="projectSavedData">
     <Array name="recentusercodeselections" />

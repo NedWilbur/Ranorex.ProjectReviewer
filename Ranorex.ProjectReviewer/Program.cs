@@ -357,7 +357,20 @@ namespace Ranorex.ProjectReviewer
                 //Create XDocument/XElement
                 XDocument repo = XDocument.Load(repositoryFilePath);
 
-                //Check Search timeout
+                //TODO Get Repo Name
+                string RepoName = "TODO";
+
+                //Loop all items
+                foreach (XElement item in repo.Descendants("item"))
+                {
+                    //Check Search timeout
+                    int searchtimeout = int.Parse(item.Attribute("searchtimeout").Value.Replace("ms", ""));
+                    if (searchtimeout > 30000)
+                        Write($"{RepoName} - {item.Name}", $"Searchtime out > 30s", 1);
+                    if (searchtimeout < 30000)
+                        Write($"{RepoName} - {item.Name}", $"Searchtime out < 30s", 1);
+                }
+
                 //Check if any items with same rxpath
                 //Check for long names
                 //Check for 2+ elements with matching root RxPath
