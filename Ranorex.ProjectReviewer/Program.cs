@@ -50,20 +50,27 @@ namespace Ranorex.ProjectReviewer
         /// <returns>String array of files found</returns>
         static string[] FindFiles(string extension)
         {
-            //TODO: Error handling of bad file path
-            string[] foundFiles = Directory.GetFiles(solutionFilePath, $"*.{extension}", SearchOption.AllDirectories)
+            try
+            {
+                string[] foundFiles = Directory.GetFiles(solutionFilePath, $"*.{extension}", SearchOption.AllDirectories)
                 .Where(file => !file.Contains("bin"))
                 .ToArray();
 
-            if (foundFiles.Length <= 0)
-            {
-                Write("ERROR", $"No {extension} files found!", 3);
-                return null;
+                if (foundFiles.Length <= 0)
+                {
+                    Write("ERROR", $"No {extension} files found!", 3);
+                    return null;
+                }
+
+                return foundFiles;
             }
-
-            return foundFiles;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR: Failed to read files with extension: {extension} /n/n{ex}");
+                Console.ReadKey();
+                throw ex;
+            }
         }
-
 
         /// <summary>
         /// 
@@ -285,10 +292,10 @@ namespace Ranorex.ProjectReviewer
                     {
                         //Check for mouse {down}/{up} actions
                         if (action.Attribute("action").Value == "Up")
-                            Write(moduleName + $" [#{actionNumber}]", "Mouse-Up action found", 3);
+                            Write(moduleName + $" [#{actionNumber}]", "{Mouse-Up} action found", 3);
 
                         if (action.Attribute("action").Value == "Down")
-                            Write(moduleName + $" [#{actionNumber}]", "Mouse-Down action found", 3);
+                            Write(moduleName + $" [#{actionNumber}]", "{Mouse-Down} action found", 3);
 
                         //Check for fixed pixel mouse action spot
                         if (action.Attribute("loc").Value.Any(Char.IsDigit))
@@ -359,7 +366,7 @@ namespace Ranorex.ProjectReviewer
                 //Create XDocument/XElement
                 XDocument repo = XDocument.Load(repositoryFilePath);
 
-                //TODO Get Repo Name
+                //Get Repo Name
                 string RepoName = Path.GetFileNameWithoutExtension(repositoryFilePath);
 
                 //Loop All Variables
