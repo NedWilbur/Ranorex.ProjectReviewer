@@ -360,7 +360,7 @@ namespace Ranorex.ProjectReviewer
                 XDocument repo = XDocument.Load(repositoryFilePath);
 
                 //TODO Get Repo Name
-                string RepoName = "TODO";
+                string RepoName = Path.GetFileNameWithoutExtension(repositoryFilePath);
 
                 //Loop All Variables
                 List<string> variables = new List<string>();
@@ -376,6 +376,9 @@ namespace Ranorex.ProjectReviewer
                     //Check for unused variables (start)
                     variables.Add(varName);
                 }
+
+                //List of used RxPaths (Check if any items with same rxpath)
+                List<string> rxPaths = new List<string>();
 
                 //Loop all items
                 foreach (XElement item in repo.Descendants("item"))
@@ -405,8 +408,13 @@ namespace Ranorex.ProjectReviewer
                         Write($"{RepoName} - {item.Name}", $"Item name > 20 characters", 1);
 
                     //Check if any items with same rxpath
+                    string rxPath = CleanWhiteSpace(item.Value);
+                    if (rxPaths.Contains(rxPath))
+                        Write($"{RepoName} - {item.Attribute("name").Value}", $"RxPath already exists, duplicate item", 2);
+                    else
+                        rxPaths.Add(rxPath);
 
-                    //Check for 2+ elements with matching root RxPath
+                    //TODO: [HARD] Check for 2+ elements with matching root RxPath
                 }
 
                 //Check for unused variables (report any not found)
