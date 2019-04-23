@@ -19,6 +19,16 @@ namespace Ranorex.ProjectReviewer
             if (File.Exists(csvFilePath))
                 File.Delete(csvFilePath);
 
+            //Set Console Width
+            try
+            {
+                Console.WindowWidth = 150;
+            }
+            catch (Exception)
+            {
+                Console.WindowWidth = Console.LargestWindowWidth;
+            }
+                
             //Get Solution File Path
             Console.Write("Compress Solution File Path: ");
             solutionFilePath = Console.ReadLine();
@@ -26,9 +36,10 @@ namespace Ranorex.ProjectReviewer
                 solutionFilePath = @"..\..\..\ProjectReviewTester\";
 
             //Write output header
+            
             Console.WriteLine(string.Empty);
             writeCatagory = "__Category__";
-            Write("__Item__", "__Issue Description___");
+            Write("__Item__", "__Item2__", "__Issue Description___");
 
             //Inspect Files
             InspectTestSuites();
@@ -98,8 +109,8 @@ namespace Ranorex.ProjectReviewer
             Console.WriteLine(
                     $"{severity,-1} | " +
                     $"{writeCatagory,-15} | " +
-                    $"{itemName,-50} | " +
-                    $"{itemName2,-50} | " +
+                    $"{itemName,-30} | " +
+                    $"{itemName2,-30} | " +
                     $"{message,5}");
             Console.ResetColor();
 
@@ -148,7 +159,7 @@ namespace Ranorex.ProjectReviewer
                 {
                     //Check for TC descriptions
                     if (!TCContainsDescription(tc))
-                        Write(tc.Attribute("name").Value, "Test case is missing a description", 1);
+                        Write(testsuiteName, tc.Attribute("name").Value, "Test case is missing a description", 1);
                 }
 
                 //Check for empty test containers
@@ -156,7 +167,7 @@ namespace Ranorex.ProjectReviewer
                 foreach (XElement testCase in allChildTestCases)
                 {
                     if (!testCase.Elements().Any())
-                        Write($"({testsuiteName}) {testCase.Attribute("name").Value}", "Testcase is empty", 2);
+                        Write(testsuiteName, testCase.Attribute("name").Value, "Testcase is empty", 2);
                 }
 
                 //Loop all Modules
@@ -169,14 +180,14 @@ namespace Ranorex.ProjectReviewer
                         continue;
 
                     if (enabledAttribute.Value == "False")
-                        Write($"({testsuiteName}) {module.Attribute("name").Value}", "Disabled module in test suite", 1);
+                        Write(testsuiteName, module.Attribute("name").Value, "Disabled module in test suite", 1);
                 }
 
                 //Check for test configurations (exluding default 'TestRun')
                 IEnumerable<XElement> allTestConfigurations = testSuite.Descendants("testconfiguration");
                 if (allTestConfigurations.Count() == 1)
                     if (allTestConfigurations.FirstOrDefault().Attribute("name").Value == "TestRun")
-                        Write($"({testsuiteName})", "Only default 'TestRun' test configuration found", 1);
+                        Write(testsuiteName, "Only default 'TestRun' test configuration found", 1);
             }
         }
 
@@ -201,7 +212,7 @@ namespace Ranorex.ProjectReviewer
         static void InspectRecordingModulesXML()
         {
             //Set catagory for output file
-            writeCatagory = "Module";
+            writeCatagory = "RecordingModule";
 
             //Get all recording modules files
             string[] recordingModules = FindFiles("rxrec");
@@ -209,7 +220,7 @@ namespace Ranorex.ProjectReviewer
             //Check if no modules found
             if (recordingModules == null)
             {
-                Write("Modules", $"No recording modules found", 3);
+                Write(writeCatagory, "No recording modules found", 3);
                 return;
             }
 
@@ -386,7 +397,7 @@ namespace Ranorex.ProjectReviewer
 
                     //Check for variables with no default value
                     if (string.IsNullOrEmpty(var.Value))
-                        Write($"{RepoName} - {varName}", $"No default value for variable", 2);
+                        Write(RepoName, varName, $"No default value for variable", 2);
 
                     //Check for unused variables (start)
                     variables.Add(varName);
@@ -404,9 +415,9 @@ namespace Ranorex.ProjectReviewer
                     //Check Search timeout
                     int searchtimeout = int.Parse(item.Attribute("searchtimeout").Value.Replace("ms", ""));
                     if (searchtimeout > 30000)
-                        Write($"{RepoName} - {item.Attribute("name").Value}", $"Searchtime out > 30s", 1);
+                        Write(RepoName, item.Attribute("name").Value, $"Searchtime out > 30s", 1);
                     if (searchtimeout < 30000)
-                        Write($"{RepoName} - {item.Attribute("name").Value}", $"Searchtime out < 30s", 2);
+                        Write(RepoName, item.Attribute("name").Value, $"Searchtime out < 30s", 2);
 
                     //Check for unused variables (remove from list if found)
                     if (RxPath.Contains("$"))
@@ -420,12 +431,12 @@ namespace Ranorex.ProjectReviewer
 
                     //Check for long names
                     if (item.Attribute("name").Value.Length > 20)
-                        Write($"{RepoName} - {item.Name}", $"Item name > 20 characters", 1);
+                        Write(RepoName, item.Attribute("name").Value, $"Item name > 20 characters", 1);
 
                     //Check if any items with same rxpath
                     string rxPath = CleanWhiteSpace(item.Value);
                     if (rxPaths.Contains(rxPath))
-                        Write($"{RepoName} - {item.Attribute("name").Value}", $"RxPath already exists, duplicate item", 2);
+                        Write(RepoName, item.Attribute("name").Value, $"RxPath already exists, duplicate item", 2);
                     else
                         rxPaths.Add(rxPath);
 
@@ -435,7 +446,7 @@ namespace Ranorex.ProjectReviewer
                 //Check for unused variables (report any not found)
                 if (variables.Count > 0)
                     foreach (string var in variables)
-                        Write($"{RepoName}", $"Unused variable: {var}", 2);
+                        Write(RepoName, var, "Unused variable", 2);
             }
         }
     }
