@@ -61,9 +61,9 @@ rxversion="9.0">
 	<datasources>
 	</datasources>
 	<testconfigurations
-	default="TestRun">
+	default="TestRun1">
 		<testconfiguration
-		name="TestRun">
+		name="TestRun1">
 			<testcontainer
 			id="3f660c82-0cbf-4e6a-a499-cd44e8bf2f68">
 			</testcontainer>

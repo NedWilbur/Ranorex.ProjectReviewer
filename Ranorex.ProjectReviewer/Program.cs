@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Ranorex.ProjectReviewer
@@ -73,12 +71,13 @@ namespace Ranorex.ProjectReviewer
         }
 
         /// <summary>
-        /// 
+        /// Writes message to console and a csv file
         /// </summary>
         /// <param name="itemName">File name</param>
+        /// <param name="itemName2">Second File Name</param>
         /// <param name="message">Description of issue</param>
         /// <param name="severity">1-3 (3 needs immediate attention)</param>
-        static void Write(string itemName, string message, int severity = 0)
+        static void Write(string itemName, string itemName2, string message, int severity = 0)
         {
             //Write to console
             switch (severity)
@@ -100,13 +99,18 @@ namespace Ranorex.ProjectReviewer
                     $"{severity,-1} | " +
                     $"{writeCatagory,-15} | " +
                     $"{itemName,-50} | " +
+                    $"{itemName2,-50} | " +
                     $"{message,5}");
             Console.ResetColor();
 
             //Write to CSV file
             using (StreamWriter writer = new StreamWriter(new FileStream(csvFilePath, FileMode.Append, FileAccess.Write)))
-                writer.WriteLine($"{severity},{writeCatagory},{itemName},{message},");
+                writer.WriteLine($"{severity},{writeCatagory},{itemName}, {itemName2},{message},");
         }
+
+        static void Write(string itemName, string message, int severity = 0) => Write(itemName, string.Empty, message, severity);
+        static void Write(string itemName, string message) => Write(itemName, string.Empty, message, 0);
+        static void WriteError(string errorMessage, Exception ex) => Write("ERROR", string.Empty, $"{errorMessage} - {ex}", 3);
 
         static string CleanWhiteSpace(string value) => Regex.Replace(value, @"\s+", "");
 
@@ -168,7 +172,11 @@ namespace Ranorex.ProjectReviewer
                         Write($"({testsuiteName}) {module.Attribute("name").Value}", "Disabled module in test suite", 1);
                 }
 
-                //TODO: Check for test configurations (exluding default 'TestRun')
+                //Check for test configurations (exluding default 'TestRun')
+                IEnumerable<XElement> allTestConfigurations = testSuite.Descendants("testconfiguration");
+                if (allTestConfigurations.Count() == 1)
+                    if (allTestConfigurations.FirstOrDefault().Attribute("name").Value == "TestRun")
+                        Write($"({testsuiteName})", "Only default 'TestRun' test configuration found", 1);
             }
         }
 
