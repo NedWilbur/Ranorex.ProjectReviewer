@@ -9,7 +9,7 @@ namespace Ranorex.ProjectReviewer
 {
     class Program
     {
-        static string solutionFilePath;
+        public static string solutionFilePath;
 
         static void Main(string[] args)
         {
@@ -54,45 +54,13 @@ namespace Ranorex.ProjectReviewer
             Console.ReadKey();
         }
 
-        /// <summary>
-        /// Finds files with a specific extension. Ignores /bin folder.
-        /// </summary>
-        /// <param name="extension"></param>
-        /// <returns>String array of files found</returns>
-        static string[] FindFiles(string extension)
-        {
-            try
-            {
-                string[] foundFiles = Directory.GetFiles(solutionFilePath, $"*.{extension}", SearchOption.AllDirectories)
-                .Where(file => !file.Contains("bin"))
-                .ToArray();
-
-                if (foundFiles.Length <= 0)
-                {
-                    Writer.Write("ERROR", $"No {extension} files found!", 3);
-                    return null;
-                }
-
-                return foundFiles;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"ERROR: Failed to read files with extension: {extension} /n/n{ex}");
-                Console.ReadKey();
-                throw ex;
-            }
-        }
-
-
-        static string CleanWhiteSpace(string value) => Regex.Replace(value, @"\s+", "");
-
         static void InspectTestSuites()
         {
             //Set catagory for output file
             Writer.catagory = "TestSuite";
 
             //Get all TS files
-            string[] testSuites = FindFiles("rxtst");
+            string[] testSuites = Utilities.FindFiles("rxtst");
 
             //Check if any TS files
             if (testSuites == null)
@@ -179,7 +147,7 @@ namespace Ranorex.ProjectReviewer
             Writer.catagory = "RecordingModule";
 
             //Get all recording modules files
-            string[] recordingModules = FindFiles("rxrec");
+            string[] recordingModules = Utilities.FindFiles("rxrec");
 
             //Check if no modules found
             if (recordingModules == null)
@@ -335,7 +303,7 @@ namespace Ranorex.ProjectReviewer
             Writer.catagory = "Repo";
 
             //Get all recording modules files
-            string[] repositories = FindFiles("rxrep");
+            string[] repositories = Utilities.FindFiles("rxrep");
 
             //Check if no modules found
             if (repositories == null)
@@ -378,7 +346,7 @@ namespace Ranorex.ProjectReviewer
                     StatTracker.totalRepoItems++;
 
                     //Get RxPath value
-                    string RxPath = CleanWhiteSpace(item.Value);
+                    string RxPath = Utilities.CleanWhiteSpace(item.Value);
 
                     //Check Search timeout
                     int searchtimeout = int.Parse(item.Attribute("searchtimeout").Value.Replace("ms", ""));
@@ -402,7 +370,7 @@ namespace Ranorex.ProjectReviewer
                         Writer.Write(RepoName, item.Attribute("name").Value, $"Item name > 20 characters", 1);
 
                     //Check if any items with same rxpath
-                    string rxPath = CleanWhiteSpace(item.Value);
+                    string rxPath = Utilities.CleanWhiteSpace(item.Value);
                     if (rxPaths.Contains(rxPath))
                         Writer.Write(RepoName, item.Attribute("name").Value, $"RxPath already exists, duplicate item", 2);
                     else
