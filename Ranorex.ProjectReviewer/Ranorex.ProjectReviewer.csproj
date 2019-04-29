@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InspectRecordingModule.cs" />
+    <Compile Include="InspectRepository.cs" />
     <Compile Include="InspectTestSuite.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
