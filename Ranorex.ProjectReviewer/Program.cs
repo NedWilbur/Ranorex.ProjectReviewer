@@ -10,7 +10,7 @@ namespace Ranorex.ProjectReviewer
     class Program
     {
         static string solutionFilePath;
-        static string writeCatagory;
+        public static string writeCatagory;
         static string csvFilePath = "project_analysis.csv";
 
         static void Main(string[] args)
@@ -46,6 +46,8 @@ namespace Ranorex.ProjectReviewer
             InspectRecordingModulesXML();
             InspectReposities();
 
+            //Output Stats
+            StatTracker.WriteStats();
 
             //Finished
             Console.WriteLine($"\nFinished, project analysis here: {csvFilePath} \n\n(press any key to exit)");
@@ -95,12 +97,15 @@ namespace Ranorex.ProjectReviewer
             {
                 case 1:
                     Console.BackgroundColor = ConsoleColor.DarkGray;
+                    StatTracker.totalMinorFindings++;
                     break;
                 case 2:
                     Console.BackgroundColor = ConsoleColor.DarkYellow;
+                    StatTracker.totalMajorFindings++;
                     break;
                 case 3:
                     Console.BackgroundColor = ConsoleColor.DarkRed;
+                    StatTracker.totalSevereFindings++;
                     break;
                 default:
                     Console.ResetColor();
@@ -122,6 +127,7 @@ namespace Ranorex.ProjectReviewer
         static void Write(string itemName, string message, int severity = 0) => Write(itemName, string.Empty, message, severity);
         static void Write(string itemName, string message) => Write(itemName, string.Empty, message, 0);
         static void WriteError(string errorMessage, Exception ex) => Write("ERROR", string.Empty, $"{errorMessage} - {ex}", 3);
+        public static void WriteStat(string type, int number) => Write(type, string.Empty, number.ToString(), 0);
 
         static string CleanWhiteSpace(string value) => Regex.Replace(value, @"\s+", "");
 
@@ -138,7 +144,8 @@ namespace Ranorex.ProjectReviewer
                 return;
 
             //Loop all TS files
-            int totalTC = 0;
+            StatTracker.totalTestSuites += testSuites.Count();
+            int totalTestCases = 0;
             foreach (string testSuiteFile in testSuites)
             {
                 //Create XML Reader for TS file
@@ -154,7 +161,8 @@ namespace Ranorex.ProjectReviewer
 
                 //Loop all TC in TS
                 IEnumerable<XElement> AllFlatTestCases = testSuite.Descendants("flatlistofchildren").Descendants("testcase");
-                totalTC += AllFlatTestCases.Count<XElement>();
+                totalTestCases += AllFlatTestCases.Count<XElement>();
+                StatTracker.totalTestContainers += totalTestCases;
                 foreach (XElement tc in AllFlatTestCases)
                 {
                     //Check for TC descriptions
@@ -170,8 +178,9 @@ namespace Ranorex.ProjectReviewer
                         Write(testsuiteName, testCase.Attribute("name").Value, "Testcase is empty", 2);
                 }
 
-                //Loop all Modules
+                //Loop all Modules in TS
                 IEnumerable<XElement> allFlatModules = testSuite.Descendants("flatlistofchildren").Descendants("testmodule");
+                StatTracker.totalModulesUsedTestSuites += allFlatModules.Count();
                 foreach (XElement module in allFlatModules)
                 {
                     //Check for disabled modules 
@@ -225,6 +234,7 @@ namespace Ranorex.ProjectReviewer
             }
 
             //Loop all modules
+            StatTracker.totalRecordingModules += recordingModules.Count();
             foreach (string recordingModuleFilePath in recordingModules)
             {
                 //Create XDocument/XElement
@@ -248,7 +258,6 @@ namespace Ranorex.ProjectReviewer
                     Write(moduleName, $"Speed Factor = ({speedFactor}) (generally = 1)", 1);
 
                 //TODO: Check for default values on variables
-
                 //TODO: Check for unused variable
 
                 //Loop all actions (aka 'recorditems')
@@ -267,6 +276,7 @@ namespace Ranorex.ProjectReviewer
                 }
 
                 //Loop all actions
+                StatTracker.totalActions += allActions.Count();
                 int actionNumber = 1;//Used for logging
                 foreach (XElement action in allActions)
                 {
@@ -380,6 +390,7 @@ namespace Ranorex.ProjectReviewer
             }
 
             //Loop all repos
+            StatTracker.totalRepositorys += repositories.Count();
             foreach (string repositoryFilePath in repositories)
             {
                 //Create XDocument/XElement
@@ -409,6 +420,8 @@ namespace Ranorex.ProjectReviewer
                 //Loop all items
                 foreach (XElement item in repo.Descendants("item"))
                 {
+                    StatTracker.totalRepoItems++;
+
                     //Get RxPath value
                     string RxPath = CleanWhiteSpace(item.Value);
 
