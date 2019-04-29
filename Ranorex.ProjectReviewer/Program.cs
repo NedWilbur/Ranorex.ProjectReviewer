@@ -10,14 +10,15 @@ namespace Ranorex.ProjectReviewer
     class Program
     {
         static string solutionFilePath;
-        public static string writeCatagory;
-        static string csvFilePath = "project_analysis.csv";
 
         static void Main(string[] args)
         {
+            //Set Filename
+            Writer.csvFilePath = "ProjectAnalysis.csv";
+
             //Delete existing csv file
-            if (File.Exists(csvFilePath))
-                File.Delete(csvFilePath);
+            if (File.Exists(Writer.csvFilePath))
+                File.Delete(Writer.csvFilePath);
 
             //Set Console Width
             try
@@ -36,10 +37,9 @@ namespace Ranorex.ProjectReviewer
                 solutionFilePath = @"..\..\..\ProjectReviewTester\";
 
             //Write output header
-            
             Console.WriteLine(string.Empty);
-            writeCatagory = "__Category__";
-            Write("__Item__", "__Item2__", "__Issue Description___");
+            Writer.catagory = "__Category__";
+            Writer.Write("__Item__", "__Item2__", "__Issue Description___");
 
             //Inspect Files
             InspectTestSuites();
@@ -50,7 +50,7 @@ namespace Ranorex.ProjectReviewer
             StatTracker.WriteStats();
 
             //Finished
-            Console.WriteLine($"\nFinished, project analysis here: {csvFilePath} \n\n(press any key to exit)");
+            Console.WriteLine($"\nFinished, project analysis here: {Writer.csvFilePath} \n\n(press any key to exit)");
             Console.ReadKey();
         }
 
@@ -69,7 +69,7 @@ namespace Ranorex.ProjectReviewer
 
                 if (foundFiles.Length <= 0)
                 {
-                    Write("ERROR", $"No {extension} files found!", 3);
+                    Writer.Write("ERROR", $"No {extension} files found!", 3);
                     return null;
                 }
 
@@ -83,58 +83,13 @@ namespace Ranorex.ProjectReviewer
             }
         }
 
-        /// <summary>
-        /// Writes message to console and a csv file
-        /// </summary>
-        /// <param name="itemName">File name</param>
-        /// <param name="itemName2">Second File Name</param>
-        /// <param name="message">Description of issue</param>
-        /// <param name="severity">1-3 (3 needs immediate attention)</param>
-        static void Write(string itemName, string itemName2, string message, int severity = 0)
-        {
-            //Write to console
-            switch (severity)
-            {
-                case 1:
-                    Console.BackgroundColor = ConsoleColor.DarkGray;
-                    StatTracker.totalMinorFindings++;
-                    break;
-                case 2:
-                    Console.BackgroundColor = ConsoleColor.DarkYellow;
-                    StatTracker.totalMajorFindings++;
-                    break;
-                case 3:
-                    Console.BackgroundColor = ConsoleColor.DarkRed;
-                    StatTracker.totalSevereFindings++;
-                    break;
-                default:
-                    Console.ResetColor();
-                    break;
-            }
-            Console.WriteLine(
-                    $"{severity,-1} | " +
-                    $"{writeCatagory,-15} | " +
-                    $"{itemName,-30} | " +
-                    $"{itemName2,-30} | " +
-                    $"{message,5}");
-            Console.ResetColor();
-
-            //Write to CSV file
-            using (StreamWriter writer = new StreamWriter(new FileStream(csvFilePath, FileMode.Append, FileAccess.Write)))
-                writer.WriteLine($"{severity},{writeCatagory},{itemName}, {itemName2},{message},");
-        }
-
-        static void Write(string itemName, string message, int severity = 0) => Write(itemName, string.Empty, message, severity);
-        static void Write(string itemName, string message) => Write(itemName, string.Empty, message, 0);
-        static void WriteError(string errorMessage, Exception ex) => Write("ERROR", string.Empty, $"{errorMessage} - {ex}", 3);
-        public static void WriteStat(string type, int number) => Write(type, string.Empty, number.ToString(), 0);
 
         static string CleanWhiteSpace(string value) => Regex.Replace(value, @"\s+", "");
 
         static void InspectTestSuites()
         {
             //Set catagory for output file
-            writeCatagory = "TestSuite";
+            Writer.catagory = "TestSuite";
 
             //Get all TS files
             string[] testSuites = FindFiles("rxtst");
@@ -154,10 +109,10 @@ namespace Ranorex.ProjectReviewer
 
                 //Check for Setup/Teardowns
                 if (testSuite.Descendants("flatlistofchildren").Descendants("setup").Count() <= 0)
-                    Write(testsuiteName, "No [SETUP] regions found", 2);
+                    Writer.Write(testsuiteName, "No [SETUP] regions found", 2);
 
                 if (testSuite.Descendants("flatlistofchildren").Descendants("teardown").Count() <= 0)
-                    Write(testsuiteName, "No [TEARDOWN] regions found", 3);
+                    Writer.Write(testsuiteName, "No [TEARDOWN] regions found", 3);
 
                 //Loop all TC in TS
                 IEnumerable<XElement> AllFlatTestCases = testSuite.Descendants("flatlistofchildren").Descendants("testcase");
@@ -167,7 +122,7 @@ namespace Ranorex.ProjectReviewer
                 {
                     //Check for TC descriptions
                     if (!TCContainsDescription(tc))
-                        Write(testsuiteName, tc.Attribute("name").Value, "Test case is missing a description", 1);
+                        Writer.Write(testsuiteName, tc.Attribute("name").Value, "Test case is missing a description", 1);
                 }
 
                 //Check for empty test containers
@@ -175,7 +130,7 @@ namespace Ranorex.ProjectReviewer
                 foreach (XElement testCase in allChildTestCases)
                 {
                     if (!testCase.Elements().Any())
-                        Write(testsuiteName, testCase.Attribute("name").Value, "Testcase is empty", 2);
+                        Writer.Write(testsuiteName, testCase.Attribute("name").Value, "Testcase is empty", 2);
                 }
 
                 //Loop all Modules in TS
@@ -189,14 +144,14 @@ namespace Ranorex.ProjectReviewer
                         continue;
 
                     if (enabledAttribute.Value == "False")
-                        Write(testsuiteName, module.Attribute("name").Value, "Disabled module in test suite", 1);
+                        Writer.Write(testsuiteName, module.Attribute("name").Value, "Disabled module in test suite", 1);
                 }
 
                 //Check for test configurations (exluding default 'TestRun')
                 IEnumerable<XElement> allTestConfigurations = testSuite.Descendants("testconfiguration");
                 if (allTestConfigurations.Count() == 1)
                     if (allTestConfigurations.FirstOrDefault().Attribute("name").Value == "TestRun")
-                        Write(testsuiteName, "Only default 'TestRun' test configuration found", 1);
+                        Writer.Write(testsuiteName, "Only default 'TestRun' test configuration found", 1);
             }
         }
 
@@ -221,7 +176,7 @@ namespace Ranorex.ProjectReviewer
         static void InspectRecordingModulesXML()
         {
             //Set catagory for output file
-            writeCatagory = "RecordingModule";
+            Writer.catagory = "RecordingModule";
 
             //Get all recording modules files
             string[] recordingModules = FindFiles("rxrec");
@@ -229,7 +184,7 @@ namespace Ranorex.ProjectReviewer
             //Check if no modules found
             if (recordingModules == null)
             {
-                Write(writeCatagory, "No recording modules found", 3);
+                Writer.Write(Writer.catagory, "No recording modules found", 3);
                 return;
             }
 
@@ -246,16 +201,16 @@ namespace Ranorex.ProjectReviewer
                 //Check Repeat Count
                 int repeatCount = int.Parse(recordTable.Element("repeatcount").Value);
                 if (repeatCount != 1)
-                    Write(moduleName, $"Repeat count = ({repeatCount}) (generally = 1)", 1);
+                    Writer.Write(moduleName, $"Repeat count = ({repeatCount}) (generally = 1)", 1);
 
                 //Check if turbomode = True
                 if (recordTable.Element("turbomode").Value.Contains("True"))
-                    Write(moduleName, "TurboMode Enabled", 1);
+                    Writer.Write(moduleName, "TurboMode Enabled", 1);
 
                 //Check Speed Factor not equal to 1
                 float speedFactor = float.Parse(recordTable.Element("speedfactor").Value);
                 if (speedFactor != 1)
-                    Write(moduleName, $"Speed Factor = ({speedFactor}) (generally = 1)", 1);
+                    Writer.Write(moduleName, $"Speed Factor = ({speedFactor}) (generally = 1)", 1);
 
                 //TODO: Check for default values on variables
                 //TODO: Check for unused variable
@@ -266,12 +221,12 @@ namespace Ranorex.ProjectReviewer
 
                 //Check if Action count > 15
                 if (allActions.Count() > 15)
-                    Write(moduleName, $"More than 15 actions ({allActions.Count()})", 2);
+                    Writer.Write(moduleName, $"More than 15 actions ({allActions.Count()})", 2);
 
                 //Check for empty modules (no actions)
                 if (allActions.Count() <= 0)
                 {
-                    Write(moduleName, $"Empty module with no actions", 2);
+                    Writer.Write(moduleName, $"Empty module with no actions", 2);
                     commentFound = true; //No need to warn on comments if 0 actions found
                 }
 
@@ -282,11 +237,11 @@ namespace Ranorex.ProjectReviewer
                 {
                     //Check for static delays
                     if (action.Name == "explicitdelayitem")
-                        Write(moduleName + $" [#{actionNumber}]", $"Static delay found ({action.Attribute("duration").Value})", 3);
+                        Writer.Write(moduleName + $" [#{actionNumber}]", $"Static delay found ({action.Attribute("duration").Value})", 3);
 
                     //Check for disabled actions
                     if (action.Attribute("enabled").Value == "False")
-                        Write(moduleName + $" [#{actionNumber}]", $"Disabled '{action.Name}' action found", 1);
+                        Writer.Write(moduleName + $" [#{actionNumber}]", $"Disabled '{action.Name}' action found", 1);
 
                     //Check for repo item bindings (only on recommended actions)
                     if (action.Name == "mouseitem" ||
@@ -301,16 +256,16 @@ namespace Ranorex.ProjectReviewer
                         action.Name == "WaitForRecordItem" ||
                         action.Name == "closeapprecorditem")
                         if (action.Element("info") == null)
-                            Write(moduleName + $" [#{actionNumber}]", $"{action.Name} missing a repository item", 3);
+                            Writer.Write(moduleName + $" [#{actionNumber}]", $"{action.Name} missing a repository item", 3);
 
                     //Check for report line without a message
                     if (action.Name == "loggingrecorditem")
                         if (string.IsNullOrEmpty(action.Attribute("message").Value))
-                            Write(moduleName + $" [#{actionNumber}]", "Empty 'Log Message' action found", 1);
+                            Writer.Write(moduleName + $" [#{actionNumber}]", "Empty 'Log Message' action found", 1);
 
                     //Check for seperators (indicating for possible module split)
                     if (action.Name == "separatoritem")
-                        Write(moduleName + $" [#{actionNumber}]", $"Seperator found - may be split into smaller modules (Text: {Regex.Replace(action.Element("comment").Value, @"\s+", "")})", 2);
+                        Writer.Write(moduleName + $" [#{actionNumber}]", $"Seperator found - may be split into smaller modules (Text: {Regex.Replace(action.Element("comment").Value, @"\s+", "")})", 2);
 
                     //Check for any action comments (output below loop)
                     if (action.Element("comment") != null)
@@ -321,10 +276,10 @@ namespace Ranorex.ProjectReviewer
                     {
                         //Check for mouse {down}/{up} actions
                         if (action.Attribute("action").Value == "Up")
-                            Write(moduleName + $" [#{actionNumber}]", "{Mouse-Up} action found", 3);
+                            Writer.Write(moduleName + $" [#{actionNumber}]", "{Mouse-Up} action found", 3);
 
                         if (action.Attribute("action").Value == "Down")
-                            Write(moduleName + $" [#{actionNumber}]", "{Mouse-Down} action found", 3);
+                            Writer.Write(moduleName + $" [#{actionNumber}]", "{Mouse-Down} action found", 3);
 
                         //Check for fixed pixel mouse action spot
                         if (action.Attribute("loc").Value.Any(Char.IsDigit))
@@ -337,14 +292,14 @@ namespace Ranorex.ProjectReviewer
                                 {
                                     if (float.Parse(location) > 1)
                                     {
-                                        Write(moduleName + $" [#{actionNumber}]", "Proportional (%) mouse click action spot > 100%", 3);
+                                        Writer.Write(moduleName + $" [#{actionNumber}]", "Proportional (%) mouse click action spot > 100%", 3);
                                         break;
                                     }
                                 }
                                 //Absolute location
                                 else
                                 {
-                                    Write(moduleName + $" [#{actionNumber}]", "Absolute pixel mouse click action spot", 3);
+                                    Writer.Write(moduleName + $" [#{actionNumber}]", "Absolute pixel mouse click action spot", 3);
                                     break;
                                 }
                             }
@@ -356,13 +311,13 @@ namespace Ranorex.ProjectReviewer
                     {
                         //Check for {} in keysequence, could mean up/down keypress or some other bad practice
                         if (action.Attribute("KeySequence").Value.Contains('{'))
-                            Write(moduleName + $" [#{actionNumber}]", "{} found in keysequence found (possible issue)", 2);
+                            Writer.Write(moduleName + $" [#{actionNumber}]", "{} found in keysequence found (possible issue)", 2);
 
                         //Check for non-merged keyboard actions
                         XElement nextAction = action.ElementsAfterSelf().FirstOrDefault();
                         if (nextAction != null)
                             if (nextAction.Name == "keysequenceitem")
-                                Write(moduleName + $" [#{actionNumber}]", "Non-merged keyboard action found", 2);
+                                Writer.Write(moduleName + $" [#{actionNumber}]", "Non-merged keyboard action found", 2);
                     }
 
                     //Used for logging
@@ -370,14 +325,14 @@ namespace Ranorex.ProjectReviewer
                 }
 
                 if (!commentFound)
-                    Write(moduleName, "No action comments found", 1);
+                    Writer.Write(moduleName, "No action comments found", 1);
             }
         }
 
         static void InspectReposities()
         {
             //Set catagory for output file
-            writeCatagory = "Repo";
+            Writer.catagory = "Repo";
 
             //Get all recording modules files
             string[] repositories = FindFiles("rxrep");
@@ -385,7 +340,7 @@ namespace Ranorex.ProjectReviewer
             //Check if no modules found
             if (repositories == null)
             {
-                Write("Repo", $"No repositories found", 3);
+                Writer.Write("Repo", $"No repositories found", 3);
                 return;
             }
 
@@ -408,7 +363,7 @@ namespace Ranorex.ProjectReviewer
 
                     //Check for variables with no default value
                     if (string.IsNullOrEmpty(var.Value))
-                        Write(RepoName, varName, $"No default value for variable", 2);
+                        Writer.Write(RepoName, varName, $"No default value for variable", 2);
 
                     //Check for unused variables (start)
                     variables.Add(varName);
@@ -428,9 +383,9 @@ namespace Ranorex.ProjectReviewer
                     //Check Search timeout
                     int searchtimeout = int.Parse(item.Attribute("searchtimeout").Value.Replace("ms", ""));
                     if (searchtimeout > 30000)
-                        Write(RepoName, item.Attribute("name").Value, $"Searchtime out > 30s", 1);
+                        Writer.Write(RepoName, item.Attribute("name").Value, $"Searchtime out > 30s", 1);
                     if (searchtimeout < 30000)
-                        Write(RepoName, item.Attribute("name").Value, $"Searchtime out < 30s", 2);
+                        Writer.Write(RepoName, item.Attribute("name").Value, $"Searchtime out < 30s", 2);
 
                     //Check for unused variables (remove from list if found)
                     if (RxPath.Contains("$"))
@@ -444,12 +399,12 @@ namespace Ranorex.ProjectReviewer
 
                     //Check for long names
                     if (item.Attribute("name").Value.Length > 20)
-                        Write(RepoName, item.Attribute("name").Value, $"Item name > 20 characters", 1);
+                        Writer.Write(RepoName, item.Attribute("name").Value, $"Item name > 20 characters", 1);
 
                     //Check if any items with same rxpath
                     string rxPath = CleanWhiteSpace(item.Value);
                     if (rxPaths.Contains(rxPath))
-                        Write(RepoName, item.Attribute("name").Value, $"RxPath already exists, duplicate item", 2);
+                        Writer.Write(RepoName, item.Attribute("name").Value, $"RxPath already exists, duplicate item", 2);
                     else
                         rxPaths.Add(rxPath);
 
@@ -459,7 +414,7 @@ namespace Ranorex.ProjectReviewer
                 //Check for unused variables (report any not found)
                 if (variables.Count > 0)
                     foreach (string var in variables)
-                        Write(RepoName, var, "Unused variable", 2);
+                        Writer.Write(RepoName, var, "Unused variable", 2);
             }
         }
     }

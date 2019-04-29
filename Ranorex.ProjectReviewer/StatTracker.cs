@@ -30,19 +30,19 @@ namespace Ranorex.ProjectReviewer
         public static void WriteStats()
         {
             //Set Catagory
-            Program.writeCatagory = "StatTracker";
+            Writer.catagory = "StatTracker";
 
-            Program.WriteStat("totalMinorFindings", totalMinorFindings);
-            Program.WriteStat("totalMajorFindings", totalMajorFindings);
-            Program.WriteStat("totalSevereFindings",  totalSevereFindings);
+            Writer.WriteStat("totalMinorFindings", totalMinorFindings);
+            Writer.WriteStat("totalMajorFindings", totalMajorFindings);
+            Writer.WriteStat("totalSevereFindings",  totalSevereFindings);
 
-            Program.WriteStat("totalTestSuites", totalTestSuites);
-            Program.WriteStat("totalModulesUsedTestSuites", totalModulesUsedTestSuites);
+            Writer.WriteStat("totalTestSuites", totalTestSuites);
+            Writer.WriteStat("totalModulesUsedTestSuites", totalModulesUsedTestSuites);
 
-            Program.WriteStat("totalRecordingModules", totalRecordingModules);
+            Writer.WriteStat("totalRecordingModules", totalRecordingModules);
 
-            Program.WriteStat("totalRepositorys", totalRepositorys);
-            Program.WriteStat("totalRepoItems", totalRepoItems);
+            Writer.WriteStat("totalRepositorys", totalRepositorys);
+            Writer.WriteStat("totalRepoItems", totalRepoItems);
         }
     }
 }
