@@ -48,10 +48,33 @@ namespace Ranorex.ProjectReviewer
                 if (speedFactor != 1)
                     Writer.Write(moduleName, $"Speed Factor = ({speedFactor}) (generally = 1)", 1);
 
-                //TODO: Check for default values on variables
-                //TODO: Check for unused variable
+                //Loop All Variables
+                List<string> variables = new List<string>();
+                foreach (XElement var in recordTable.Descendants("var"))
+                {
+                    //Get variable name
+                    string varName = var.Attribute("name").Value;
 
-                //Loop all actions (aka 'recorditems')
+                    //Check for variables with no default value
+                    if (string.IsNullOrEmpty(var.Value))
+                        Writer.Write(moduleName, varName, $"No default value for variable", 2);
+
+                    //Check for unused variables (start)
+                    variables.Add(varName);
+                }
+
+                //Remove variables that are bound to at least one action
+                List<string> allVarBindings = new List<string>();
+                foreach (XElement binding in recordTable.Descendants("binding"))
+                {
+                    for (int i = variables.Count - 1; i >= 0; i--)
+                    {
+                        if (binding.Attribute("variable").Value == variables[i])
+                            variables.Remove(variables[i]);
+                    }
+                }
+
+                //(start of) Loop all actions (aka 'recorditems')
                 IEnumerable<XElement> allActions = recordTable.Element("recorditems").Elements();
                 bool commentFound = false;
 
@@ -159,6 +182,11 @@ namespace Ranorex.ProjectReviewer
                     //Used for logging
                     actionNumber++;
                 }
+
+                //Check for unused variables (report any not found)
+                if (variables.Count > 0)
+                    foreach (string var in variables)
+                        Writer.Write(moduleName, var, "Unused variable found", 2);
 
                 if (!commentFound)
                     Writer.Write(moduleName, "No action comments found", 1);
