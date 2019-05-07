@@ -41,6 +41,8 @@ namespace ProjectReviewTester
         /// </summary>
         public Recording1()
         {
+            NoDefaultANDNotUsed = "";
+            UsedVariable = "123";
         }
 
         /// <summary>
@@ -52,6 +54,30 @@ namespace ProjectReviewTester
         }
 
 #region Variables
+
+        string _NoDefaultANDNotUsed;
+
+        /// <summary>
+        /// Gets or sets the value of variable NoDefaultANDNotUsed.
+        /// </summary>
+        [TestVariable("20c4555e-3199-424a-9ba9-3823d0afe13a")]
+        public string NoDefaultANDNotUsed
+        {
+            get { return _NoDefaultANDNotUsed; }
+            set { _NoDefaultANDNotUsed = value; }
+        }
+
+        string _UsedVariable;
+
+        /// <summary>
+        /// Gets or sets the value of variable UsedVariable.
+        /// </summary>
+        [TestVariable("bbc73338-18aa-4ec4-b2eb-2b327dce5df7")]
+        public string UsedVariable
+        {
+            get { return _UsedVariable; }
+            set { _UsedVariable = value; }
+        }
 
 #endregion
 
@@ -79,6 +105,8 @@ namespace ProjectReviewTester
 
             Init();
 
+            Report.Log(ReportLevel.Info, "User", UsedVariable, new RecordItemIndex(0));
+            
         }
 
 #region Image Feature Data

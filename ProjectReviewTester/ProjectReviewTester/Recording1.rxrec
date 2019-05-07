@@ -24,8 +24,33 @@ rxversion="9.0">
 	namespace="ProjectReviewTester">
 	</codegen>
 	<variables>
+		<var
+		id="20c4555e-3199-424a-9ba9-3823d0afe13a"
+		name="NoDefaultANDNotUsed">
+		</var>
+		<var
+		id="bbc73338-18aa-4ec4-b2eb-2b327dce5df7"
+		name="UsedVariable">
+			123
+		</var>
 	</variables>
 	<recorditems>
+		<loggingrecorditem
+		category="User"
+		enabled="True"
+		message=""
+		optional="False"
+		reportlevel="Info;20"
+		searchpropertyid="72abd7f0-4bd9-4f21-8d32-a059227fffad">
+			<comment>
+			</comment>
+			<bindings>
+				<binding
+				target="Message"
+				variable="UsedVariable">
+				</binding>
+			</bindings>
+		</loggingrecorditem>
 	</recorditems>
 	<repository
 	id="502ec0b3-c478-4a9f-a7d3-9108fe09c94c"

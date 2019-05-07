@@ -39,6 +39,31 @@ namespace Ranorex.ProjectReviewer
             }
         }
 
+        /// <summary>
+        /// Cleans white space from values
+        /// </summary>
+        /// <param name="value">String value to clean</param>
+        /// <returns>Cleaned version of string</returns>
         public static string CleanWhiteSpace(string value) => Regex.Replace(value, @"\s+", "");
+
+        /// <summary>
+        /// Delete existing csv file if it exists
+        /// </summary>
+        public static void DeleteExistingCSVFile()
+        {
+            //Delete existing csv file
+            if (File.Exists(Writer.csvFilePath))
+            {
+                try
+                {
+                    File.Delete(Writer.csvFilePath);
+                }
+                catch (Exception ex)
+                {
+                    Writer.WriteError("Unable to delete existing CSV file!", ex);
+                }
+            }
+
+        }
     }
 }

@@ -40,6 +40,7 @@ namespace Ranorex.ProjectReviewer
             Writer.WriteStat("totalModulesUsedTestSuites", totalModulesUsedTestSuites);
 
             Writer.WriteStat("totalRecordingModules", totalRecordingModules);
+            Writer.WriteStat("totalActions", totalActions);
 
             Writer.WriteStat("totalRepositorys", totalRepositorys);
             Writer.WriteStat("totalRepoItems", totalRepoItems);

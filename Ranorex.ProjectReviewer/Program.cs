@@ -13,14 +13,7 @@ namespace Ranorex.ProjectReviewer
 
         static void Main(string[] args)
         {
-            //Set Filename
-            Writer.csvFilePath = "ProjectAnalysis.csv";
-
-            //Delete existing csv file
-            if (File.Exists(Writer.csvFilePath))
-                File.Delete(Writer.csvFilePath);
-
-            //Set Console Width
+            //Try to set Console Width
             try
             {
                 Console.WindowWidth = 150;
@@ -31,15 +24,17 @@ namespace Ranorex.ProjectReviewer
             }
                 
             //Get Solution File Path
-            Console.Write("Compress Solution File Path: ");
+            Console.Write("Compressed Solution File Path: ");
             solutionFilePath = Console.ReadLine();
             if (string.IsNullOrEmpty(solutionFilePath)) //Used for dev/debug
                 solutionFilePath = @"..\..\..\ProjectReviewTester\";
 
+            //Set Filename & Delete if exists
+            Writer.csvFilePath = $"ProjectAnalysis_{Path.GetFileName(solutionFilePath)}.csv";
+            Utilities.DeleteExistingCSVFile();
+
             //Write header
-            Console.WriteLine(string.Empty);
-            Writer.catagory = "__Category__";
-            Writer.Write("__Item__", "__Item2__", "__Issue Description___");
+            Writer.WriteHeader();
 
             //Inspect Files
             InspectTestSuites();

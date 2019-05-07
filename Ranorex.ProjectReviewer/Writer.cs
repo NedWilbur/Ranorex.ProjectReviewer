@@ -58,5 +58,15 @@ namespace Ranorex.ProjectReviewer
         public static void Write(string itemName, string message) => Write(itemName, string.Empty, message, 0);
         public static void WriteError(string errorMessage, Exception ex) => Write("ERROR", string.Empty, $"{errorMessage} - {ex}", 3);
         public static void WriteStat(string type, int number) => Write(type, string.Empty, number.ToString(), 0);
+
+        /// <summary>
+        /// Write header for console & csv file
+        /// </summary>
+        public static void WriteHeader()
+        {
+            Console.WriteLine(string.Empty);
+            catagory = "__Category__";
+            Write("__Item__", "__Item2__", "__Issue Description___");
+        }
     }
 }

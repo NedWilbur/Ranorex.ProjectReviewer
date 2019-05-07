@@ -95,7 +95,7 @@ namespace Ranorex.ProjectReviewer
                 //Check for unused variables (report any not found)
                 if (variables.Count > 0)
                     foreach (string var in variables)
-                        Writer.Write(RepoName, var, "Unused variable", 2);
+                        Writer.Write(RepoName, var, "Unused variable found", 2);
             }
         }
     }
